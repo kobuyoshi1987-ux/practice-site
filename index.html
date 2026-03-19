@@ -3,361 +3,770 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>スポーツNPO さくらFC</title>
+  <title>NPO法人 秋田スポーツPLUS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --bg: #080c12;
+      --bg2: #0d1320;
+      --bg3: #111827;
+      --accent: #00e5ff;
+      --accent2: #ff3d6b;
+      --accent3: #b6ff00;
+      --text: #e8edf5;
+      --muted: #5a6680;
+      --border: rgba(0, 229, 255, 0.15);
     }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
-      color: #333;
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
       line-height: 1.6;
+      overflow-x: hidden;
     }
 
-    /* ヘッダー */
+    /* ---- HEADER ---- */
     header {
-      background-color: #1a3c6e;
-      color: white;
-      padding: 16px 40px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      padding: 18px 48px;
+      background: rgba(8, 12, 18, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
     }
 
     .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-      letter-spacing: 1px;
+      font-size: 1.1rem;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .logo span {
-      color: #f0a500;
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-text {
+      color: var(--text);
+    }
+
+    .logo-text span {
+      color: var(--accent);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 36px;
     }
 
     nav a {
-      color: white;
+      color: var(--muted);
       text-decoration: none;
-      margin-left: 28px;
-      font-size: 0.95rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       transition: color 0.2s;
     }
 
-    nav a:hover {
-      color: #f0a500;
+    nav a:hover { color: var(--accent); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: var(--bg) !important;
+      padding: 9px 22px;
+      border-radius: 2px;
+      font-weight: 700 !important;
     }
 
-    /* ヒーロー */
+    .nav-cta:hover {
+      background: #33ecff;
+      color: var(--bg) !important;
+    }
+
+    /* ---- HERO ---- */
     .hero {
-      background: linear-gradient(135deg, #1a3c6e 0%, #2e6db4 100%);
-      color: white;
-      text-align: center;
-      padding: 100px 20px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding: 120px 48px 80px;
+      overflow: hidden;
+    }
+
+    /* グリッド背景 */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    /* 光のエフェクト */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -200px;
+      right: -100px;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(0,229,255,0.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-glow2 {
+      position: absolute;
+      bottom: -150px;
+      left: -100px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255,61,107,0.1) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 2px;
+      margin-bottom: 32px;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
     }
 
     .hero h1 {
-      font-size: 2.8rem;
-      margin-bottom: 20px;
-      line-height: 1.3;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
     }
 
-    .hero p {
-      font-size: 1.15rem;
-      max-width: 600px;
-      margin: 0 auto 40px;
-      opacity: 0.9;
+    .hero h1 .line1 { display: block; color: var(--text); }
+    .hero h1 .line2 {
+      display: block;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .btn {
-      display: inline-block;
-      background-color: #f0a500;
-      color: white;
-      padding: 14px 36px;
-      border-radius: 4px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1rem;
-      transition: background-color 0.2s;
-    }
-
-    .btn:hover {
-      background-color: #d4900a;
-    }
-
-    /* セクション共通 */
-    section {
-      padding: 72px 40px;
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: 1.8rem;
-      margin-bottom: 12px;
-      color: #1a3c6e;
-    }
-
-    .section-subtitle {
-      text-align: center;
-      color: #777;
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 520px;
       margin-bottom: 48px;
-      font-size: 0.95rem;
+      line-height: 1.8;
     }
 
-    /* 活動紹介 */
-    .activities {
-      background-color: #f8f9fc;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 28px;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .card {
-      background: white;
-      border-radius: 8px;
-      padding: 32px 24px;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-
-    .card-icon {
-      font-size: 2.5rem;
-      margin-bottom: 16px;
-    }
-
-    .card h3 {
-      font-size: 1.1rem;
-      margin-bottom: 12px;
-      color: #1a3c6e;
-    }
-
-    .card p {
-      font-size: 0.9rem;
-      color: #666;
-    }
-
-    /* お知らせ */
-    .news-list {
-      max-width: 760px;
-      margin: 0 auto;
-    }
-
-    .news-item {
+    .hero-actions {
       display: flex;
-      gap: 20px;
-      padding: 18px 0;
-      border-bottom: 1px solid #e8e8e8;
+      gap: 16px;
+      flex-wrap: wrap;
     }
 
-    .news-date {
-      font-size: 0.85rem;
-      color: #999;
-      min-width: 90px;
-      padding-top: 2px;
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: var(--bg);
+      padding: 16px 36px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.2s;
     }
 
-    .news-tag {
-      background-color: #1a3c6e;
-      color: white;
-      font-size: 0.75rem;
-      padding: 2px 10px;
-      border-radius: 3px;
-      height: fit-content;
+    .btn-primary:hover {
+      background: #33ecff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,229,255,0.3);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--muted);
+      color: var(--text);
+      padding: 16px 36px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ---- TICKER ---- */
+    .ticker {
+      background: var(--accent);
+      color: var(--bg);
+      padding: 12px 0;
+      overflow: hidden;
       white-space: nowrap;
     }
 
-    .news-item a {
-      color: #333;
-      text-decoration: none;
+    .ticker-inner {
+      display: inline-block;
+      animation: ticker 28s linear infinite;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .ticker-sep {
+      margin: 0 28px;
+      opacity: 0.5;
+    }
+
+    /* ---- SECTION COMMON ---- */
+    section {
+      padding: 100px 48px;
+    }
+
+    .label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .section-heading {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 900;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      color: var(--muted);
       font-size: 0.95rem;
+      max-width: 520px;
+      line-height: 1.8;
+      margin-bottom: 60px;
     }
 
-    .news-item a:hover {
-      color: #1a3c6e;
-      text-decoration: underline;
+    /* ---- ACTIVITIES ---- */
+    .activities {
+      background: var(--bg2);
+      position: relative;
+      overflow: hidden;
     }
 
-    /* 数字で見る */
+    .activities::after {
+      content: 'SPORT';
+      position: absolute;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14rem;
+      font-weight: 900;
+      color: rgba(255,255,255,0.02);
+      letter-spacing: -0.05em;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .activity-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .activity-card {
+      background: var(--bg2);
+      padding: 40px 32px;
+      transition: background 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .activity-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
+    .activity-card:hover { background: var(--bg3); }
+    .activity-card:hover::before { transform: scaleX(1); }
+
+    .activity-num {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      margin-bottom: 20px;
+    }
+
+    .activity-icon {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .activity-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: 0.02em;
+    }
+
+    .activity-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    /* ---- STATS ---- */
     .stats {
-      background-color: #1a3c6e;
-      color: white;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
 
-    .stats .section-title {
-      color: white;
-    }
-
-    .stats .section-subtitle {
-      color: rgba(255,255,255,0.7);
+    .stats-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
     }
 
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 32px;
-      max-width: 860px;
-      margin: 0 auto;
-      text-align: center;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--border);
     }
 
-    .stat-number {
-      font-size: 3rem;
-      font-weight: bold;
-      color: #f0a500;
+    .stat-cell {
+      background: var(--bg2);
+      padding: 40px 32px;
+    }
+
+    .stat-num {
+      font-size: 3.5rem;
+      font-weight: 900;
       line-height: 1;
-    }
-
-    .stat-unit {
-      font-size: 1.2rem;
-      color: #f0a500;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, var(--accent), #7df3ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .stat-label {
+      font-size: 0.82rem;
+      color: var(--muted);
       margin-top: 8px;
-      font-size: 0.9rem;
-      opacity: 0.85;
+      letter-spacing: 0.05em;
     }
 
-    /* お問い合わせ */
+    /* ---- NEWS ---- */
+    .news {
+      background: var(--bg2);
+    }
+
+    .news-inner {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .news-item {
+      display: grid;
+      grid-template-columns: 88px auto 1fr;
+      align-items: start;
+      gap: 16px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--text);
+      transition: color 0.2s;
+    }
+
+    .news-item:first-child { border-top: 1px solid var(--border); }
+    .news-item:hover { color: var(--accent); }
+
+    .news-date {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 600;
+      padding-top: 3px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .news-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 2px;
+      white-space: nowrap;
+      background: rgba(0,229,255,0.1);
+      color: var(--accent);
+      border: 1px solid rgba(0,229,255,0.25);
+    }
+
+    .news-tag.event {
+      background: rgba(255,61,107,0.1);
+      color: var(--accent2);
+      border-color: rgba(255,61,107,0.25);
+    }
+
+    .news-tag.report {
+      background: rgba(182,255,0,0.1);
+      color: var(--accent3);
+      border-color: rgba(182,255,0,0.25);
+    }
+
+    .news-title {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      padding-top: 2px;
+    }
+
+    /* ---- CONTACT ---- */
     .contact {
-      background-color: #f8f9fc;
+      background: var(--bg);
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
 
-    .contact p {
-      color: #666;
-      margin-bottom: 28px;
+    .contact::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0,229,255,0.07) 0%, transparent 65%);
+      pointer-events: none;
     }
 
-    /* フッター */
+    .contact-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact .section-sub {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ---- FOOTER ---- */
     footer {
-      background-color: #111;
-      color: #aaa;
-      text-align: center;
-      padding: 28px 20px;
-      font-size: 0.85rem;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 40px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
     }
+
+    .footer-logo {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--accent); }
   </style>
 </head>
 <body>
 
   <!-- ヘッダー -->
   <header>
-    <div class="logo">NPO <span>さくらFC</span></div>
+    <div class="logo">
+      <div class="logo-mark"></div>
+      <div class="logo-text">秋田スポーツ<span>PLUS</span></div>
+    </div>
     <nav>
-      <a href="#activities">活動内容</a>
-      <a href="#news">お知らせ</a>
-      <a href="#about">団体概要</a>
-      <a href="#contact">お問い合わせ</a>
+      <a href="#activities">PROGRAMS</a>
+      <a href="#news">NEWS</a>
+      <a href="#about">ABOUT</a>
+      <a href="#contact" class="nav-cta">JOIN US</a>
     </nav>
   </header>
 
   <!-- ヒーロー -->
   <section class="hero">
-    <h1>スポーツで、<br>地域をつなぐ。</h1>
-    <p>さくらFCは、子どもから大人まで誰もがスポーツを楽しめる環境づくりを目指すNPO法人です。</p>
-    <a href="#activities" class="btn">活動を見る</a>
-  </section>
-
-  <!-- 活動内容 -->
-  <section class="activities" id="activities">
-    <h2 class="section-title">活動内容</h2>
-    <p class="section-subtitle">地域の皆さんとともに、さまざまなスポーツ活動を展開しています。</p>
-    <div class="cards">
-      <div class="card">
-        <div class="card-icon">⚽</div>
-        <h3>ジュニアスクール</h3>
-        <p>小学生を対象としたサッカー教室。技術だけでなく仲間を大切にする心を育てます。</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🏃</div>
-        <h3>地域スポーツ大会</h3>
-        <p>年2回開催する地域交流マラソン・スポーツフェスタ。年齢問わず参加できます。</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">♿</div>
-        <h3>インクルーシブ活動</h3>
-        <p>障害のある方も一緒に楽しめるスポーツプログラムを月2回実施しています。</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🎓</div>
-        <h3>指導者育成</h3>
-        <p>地域のスポーツ指導者を増やすための講習会・研修を定期的に開催しています。</p>
+    <div class="hero-glow2"></div>
+    <div class="hero-content">
+      <div class="hero-badge">NPO法人 秋田スポーツPLUS</div>
+      <h1>
+        <span class="line1">MOVE FORWARD.</span>
+        <span class="line2">秋田から、世界へ。</span>
+      </h1>
+      <p class="hero-desc">
+        テクノロジーとスポーツの力で、秋田の地域課題を解決する。<br>
+        子どもから大人まで、すべての人が「動く喜び」を持てる社会を創る。
+      </p>
+      <div class="hero-actions">
+        <a href="#activities" class="btn-primary">プログラムを見る →</a>
+        <a href="#contact" class="btn-outline">支援する</a>
       </div>
     </div>
   </section>
 
-  <!-- お知らせ -->
-  <section id="news">
-    <h2 class="section-title">お知らせ</h2>
-    <p class="section-subtitle">最新の活動情報をお届けします。</p>
-    <div class="news-list">
-      <div class="news-item">
-        <span class="news-date">2026.03.15</span>
-        <span class="news-tag">イベント</span>
-        <a href="#">春季スポーツフェスタの参加者募集を開始しました</a>
+  <!-- ティッカー -->
+  <div class="ticker">
+    <span class="ticker-inner">
+      AKITA SPORTS PLUS&nbsp;<span class="ticker-sep">✦</span>&nbsp;
+      JUNIOR SCHOOL&nbsp;<span class="ticker-sep">✦</span>&nbsp;
+      INCLUSIVE SPORTS&nbsp;<span class="ticker-sep">✦</span>&nbsp;
+      COMMUNITY MARATHON&nbsp;<span class="ticker-sep">✦</span>&nbsp;
+      COACH TRAINING&nbsp;<span class="ticker-sep">✦</span>&nbsp;
+      NPO LAW CORPORATION&nbsp;<span class="ticker-sep">✦</span>&nbsp;
+      AKITA SPORTS PLUS&nbsp;<span class="ticker-sep">✦</span>&nbsp;
+      JUNIOR SCHOOL&nbsp;<span class="ticker-sep">✦</span>&nbsp;
+      INCLUSIVE SPORTS&nbsp;<span class="ticker-sep">✦</span>&nbsp;
+      COMMUNITY MARATHON&nbsp;<span class="ticker-sep">✦</span>&nbsp;
+      COACH TRAINING&nbsp;<span class="ticker-sep">✦</span>&nbsp;
+      NPO LAW CORPORATION&nbsp;<span class="ticker-sep">✦</span>&nbsp;
+    </span>
+  </div>
+
+  <!-- 活動内容 -->
+  <section class="activities" id="activities">
+    <div class="label">Programs</div>
+    <h2 class="section-heading">何をやっているか。</h2>
+    <p class="section-sub">地域に根ざした4つのプログラムで、スポーツの力を最大化する。</p>
+    <div class="activity-grid">
+      <div class="activity-card">
+        <div class="activity-num">01 / YOUTH</div>
+        <span class="activity-icon">⚽</span>
+        <h3>ジュニアスクール</h3>
+        <p>小学生対象のサッカー教室。データドリブンなトレーニングで技術と精神を育てます。</p>
       </div>
-      <div class="news-item">
-        <span class="news-date">2026.03.01</span>
-        <span class="news-tag">お知らせ</span>
-        <a href="#">2026年度 ジュニアスクール新規入会受付のご案内</a>
+      <div class="activity-card">
+        <div class="activity-num">02 / EVENT</div>
+        <span class="activity-icon">🏃</span>
+        <h3>地域スポーツ大会</h3>
+        <p>年2回開催のマラソン・スポーツフェスタ。年齢・体力不問でエントリーできます。</p>
       </div>
-      <div class="news-item">
-        <span class="news-date">2026.02.20</span>
-        <span class="news-tag">活動報告</span>
-        <a href="#">第12回 地域交流マラソン大会を開催しました</a>
+      <div class="activity-card">
+        <div class="activity-num">03 / INCLUSIVE</div>
+        <span class="activity-icon">♿</span>
+        <h3>インクルーシブ活動</h3>
+        <p>障害の有無にかかわらず共に楽しめるスポーツプログラム。月2回開催。</p>
       </div>
-      <div class="news-item">
-        <span class="news-date">2026.02.05</span>
-        <span class="news-tag">お知らせ</span>
-        <a href="#">ボランティアスタッフ募集のご案内</a>
+      <div class="activity-card">
+        <div class="activity-num">04 / TRAINING</div>
+        <span class="activity-icon">🎓</span>
+        <h3>指導者育成</h3>
+        <p>次世代コーチを育てる研修プログラム。理論と実践を組み合わせたカリキュラム。</p>
       </div>
     </div>
   </section>
 
   <!-- 数字で見る -->
   <section class="stats" id="about">
-    <h2 class="section-title">数字で見るさくらFC</h2>
-    <p class="section-subtitle">設立から15年、地域とともに歩んできました。</p>
-    <div class="stats-grid">
+    <div class="stats-inner">
       <div>
-        <div class="stat-number">850<span class="stat-unit">+</span></div>
-        <div class="stat-label">登録会員数</div>
+        <div class="label">Impact</div>
+        <h2 class="section-heading">数字が語る、<br>15年の実績。</h2>
+        <p class="section-sub">設立以来、秋田のスポーツ環境づくりに向き合い続けてきた。データが証明する私たちの歩み。</p>
+        <a href="#contact" class="btn-outline">団体概要を読む →</a>
       </div>
-      <div>
-        <div class="stat-number">15<span class="stat-unit">年</span></div>
-        <div class="stat-label">設立からの年数</div>
+      <div class="stats-grid">
+        <div class="stat-cell">
+          <div class="stat-num">850+</div>
+          <div class="stat-label">登録会員数</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-num">15yr</div>
+          <div class="stat-label">設立からの年数</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-num">42</div>
+          <div class="stat-label">累計イベント開催数</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-num">120</div>
+          <div class="stat-label">ボランティアスタッフ数</div>
+        </div>
       </div>
+    </div>
+  </section>
+
+  <!-- お知らせ -->
+  <section class="news" id="news">
+    <div class="news-inner">
       <div>
-        <div class="stat-number">42<span class="stat-unit">回</span></div>
-        <div class="stat-label">累計イベント開催数</div>
+        <div class="label">Latest News</div>
+        <h2 class="section-heading">最新情報</h2>
+        <p class="section-sub">活動レポート、イベント情報をリアルタイムで発信中。</p>
+        <a href="#" class="btn-outline" style="margin-top: 32px;">全て見る →</a>
       </div>
-      <div>
-        <div class="stat-number">120<span class="stat-unit">人</span></div>
-        <div class="stat-label">ボランティアスタッフ</div>
+      <div class="news-list">
+        <a href="#" class="news-item">
+          <span class="news-date">2026.03.15</span>
+          <span class="news-tag event">EVENT</span>
+          <span class="news-title">春季スポーツフェスタの参加者募集を開始しました</span>
+        </a>
+        <a href="#" class="news-item">
+          <span class="news-date">2026.03.01</span>
+          <span class="news-tag">INFO</span>
+          <span class="news-title">2026年度 ジュニアスクール新規入会受付のご案内</span>
+        </a>
+        <a href="#" class="news-item">
+          <span class="news-date">2026.02.20</span>
+          <span class="news-tag report">REPORT</span>
+          <span class="news-title">第12回 地域交流マラソン大会を開催しました</span>
+        </a>
+        <a href="#" class="news-item">
+          <span class="news-date">2026.02.05</span>
+          <span class="news-tag">INFO</span>
+          <span class="news-title">ボランティアスタッフ募集のご案内</span>
+        </a>
       </div>
     </div>
   </section>
 
   <!-- お問い合わせ -->
   <section class="contact" id="contact">
-    <h2 class="section-title">お問い合わせ</h2>
-    <p>活動への参加・ご支援・取材など、お気軽にご連絡ください。</p>
-    <a href="mailto:info@sakura-fc.example.org" class="btn">メールで問い合わせる</a>
+    <div class="contact-inner">
+      <div class="label" style="justify-content: center;">Contact</div>
+      <h2 class="section-heading">一緒に動こう。</h2>
+      <p class="section-sub">参加・支援・取材・協力、どんなご相談でもお気軽に。秋田スポーツPLUSはオープンです。</p>
+      <div class="hero-actions" style="justify-content: center;">
+        <a href="mailto:info@akita-sports-plus.example.org" class="btn-primary">メールで問い合わせる →</a>
+        <a href="#" class="btn-outline">寄付・支援について</a>
+      </div>
+    </div>
   </section>
 
   <!-- フッター -->
   <footer>
-    <p>&copy; 2026 NPO法人 さくらFC. All rights reserved.</p>
+    <div class="footer-logo">NPO法人 秋田スポーツ<span>PLUS</span></div>
+    <div class="footer-links">
+      <a href="#">プライバシーポリシー</a>
+      <a href="#">特定商取引法</a>
+      <a href="#">Instagram</a>
+      <a href="#">X (Twitter)</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 NPO法人 秋田スポーツPLUS</div>
   </footer>
 
 </body>
