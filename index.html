@@ -7,49 +7,50 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
+    /* ── Variables ── */
     :root {
-      --g1: #003d1a;   /* 最暗 */
-      --g2: #005c28;   /* ダーク */
-      --g3: #007a38;   /* ミッド */
-      --g4: #00a84f;   /* メイン */
-      --g5: #00d464;   /* ライト */
+      --g1: #002e13;
+      --g2: #004d22;
+      --g3: #007a38;
+      --g4: #00a84f;
+      --g5: #00d464;
       --lime: #c8ff00;
-      --white: #ffffff;
-      --offwhite: #f4f6f4;
+      --white: #fff;
+      --off: #f3f6f3;
       --text: #0c170e;
       --muted: #5c6e60;
-      --border: #d8e8dc;
+      --border: #d6e8da;
+      --hd-h: 96px; /* header total height */
     }
 
+    /* ── Reset ── */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+    body { font-family: 'Inter','Noto Sans JP',sans-serif; background: var(--white); color: var(--text); overflow-x: hidden; }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; }
 
-    body {
-      font-family: 'Inter', 'Noto Sans JP', sans-serif;
-      background: var(--white);
-      color: var(--text);
-      overflow-x: hidden;
-    }
+    /* ── Scroll-reveal ── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
 
-    /* ===== HEADER ===== */
+    /* ── HEADER ── */
     header {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      position: fixed; inset: 0 0 auto; z-index: 900;
       background: var(--g1);
+      box-shadow: 0 1px 0 rgba(255,255,255,.06);
     }
 
-    .hd-top {
+    .hd-bar {
       display: flex; justify-content: space-between; align-items: center;
       padding: 5px 48px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,.05);
     }
-
-    .hd-top-left { font-size: 0.68rem; color: rgba(255,255,255,0.4); letter-spacing: 0.08em; }
-
-    .hd-socials { display: flex; gap: 16px; }
+    .hd-bar-txt { font-size: .66rem; color: rgba(255,255,255,.35); letter-spacing: .08em; }
+    .hd-socials { display: flex; gap: 14px; }
     .hd-socials a {
-      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
-      color: rgba(255,255,255,0.45); text-decoration: none; text-transform: uppercase;
-      transition: color .2s;
+      font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(255,255,255,.4); transition: color .2s;
     }
     .hd-socials a:hover { color: var(--lime); }
 
@@ -58,841 +59,907 @@
       padding: 0 48px; height: 62px;
     }
 
-    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo { display: flex; align-items: center; gap: 11px; }
+    .logo img { width: 36px; height: 36px; object-fit: contain; }
+    .logo-txt { color: var(--white); font-weight: 900; font-size: .96rem; line-height: 1.2; }
+    .logo-txt small { display: block; font-size: .56rem; font-weight: 500; color: rgba(255,255,255,.4); letter-spacing: .1em; text-transform: uppercase; }
 
-    .logo img { width: 38px; height: 38px; object-fit: contain; }
-
-    .logo-text {
-      color: var(--white); font-weight: 900; font-size: 1rem; line-height: 1.2;
+    /* desktop nav */
+    .hd-nav { display: flex; }
+    .hd-nav a {
+      color: rgba(255,255,255,.6); font-size: .79rem; font-weight: 600; letter-spacing: .05em;
+      padding: 0 20px; height: 62px; display: flex; align-items: center;
+      border-left: 1px solid rgba(255,255,255,.06); transition: color .2s, background .2s;
     }
-    .logo-text small {
-      display: block; font-size: 0.58rem; font-weight: 500;
-      color: rgba(255,255,255,0.45); letter-spacing: 0.1em; text-transform: uppercase;
+    .hd-nav a:hover { color: var(--white); background: rgba(255,255,255,.04); }
+    .hd-nav .nav-cta {
+      background: var(--lime); color: var(--g1); font-weight: 800;
+      border-left: none; padding: 0 26px; transition: background .2s;
     }
+    .hd-nav .nav-cta:hover { background: #d9ff33; }
 
-    nav { display: flex; }
-    nav a {
-      color: rgba(255,255,255,0.65); text-decoration: none;
-      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em;
-      padding: 0 22px; height: 62px; display: flex; align-items: center;
-      border-left: 1px solid rgba(255,255,255,0.06);
+    /* hamburger */
+    .burger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      padding: 8px; background: none; border: none;
+    }
+    .burger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: all .3s; }
+    .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* mobile drawer */
+    .mob-nav {
+      display: none; flex-direction: column;
+      background: var(--g2); border-top: 1px solid rgba(255,255,255,.06);
+      overflow: hidden; max-height: 0; transition: max-height .35s ease;
+    }
+    .mob-nav.open { max-height: 400px; }
+    .mob-nav a {
+      color: rgba(255,255,255,.7); font-size: .9rem; font-weight: 600;
+      padding: 16px 24px; border-bottom: 1px solid rgba(255,255,255,.05);
       transition: color .2s, background .2s;
     }
-    nav a:hover { color: var(--white); background: rgba(255,255,255,0.04); }
-    nav .cta {
-      background: var(--lime); color: var(--g1) !important;
-      font-weight: 800; border-left: none; padding: 0 28px;
-    }
-    nav .cta:hover { background: #d9ff33; }
+    .mob-nav a:hover { color: var(--white); background: rgba(255,255,255,.04); }
+    .mob-nav .nav-cta { background: var(--lime); color: var(--g1); font-weight: 800; border-bottom: none; }
 
-    /* ===== HERO ===== */
+    /* ── HERO ── */
     .hero {
-      min-height: 100vh;
-      position: relative;
+      min-height: 100vh; position: relative;
       display: flex; align-items: flex-end;
-      padding: 0 0 72px;
-      overflow: hidden;
+      padding-bottom: 72px;
+      padding-top: var(--hd-h);
     }
-
     .hero-bg {
       position: absolute; inset: 0;
-      background: url('https://akitasports-plus.jp/images/photo/ASP%E3%83%88%E3%83%83%E3%83%95%E3%82%9A%E3%83%92%E3%82%99%E3%83%A5%E3%83%BC2.jpg') center/cover no-repeat;
+      background: url('https://akitasports-plus.jp/images/photo/ASP%E3%83%88%E3%83%83%E3%83%95%E3%82%9A%E3%83%92%E3%82%99%E3%83%A5%E3%83%BC2.jpg') center 30%/cover no-repeat;
     }
-
-    .hero-overlay {
+    .hero-ov {
       position: absolute; inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(0,30,12,0.35) 0%,
-        rgba(0,20,8,0.15) 40%,
-        rgba(0,20,8,0.75) 70%,
-        rgba(0,20,8,0.95) 100%
+      background: linear-gradient(to bottom,
+        rgba(0,25,10,.3) 0%,
+        rgba(0,15,6,.1) 35%,
+        rgba(0,15,6,.7) 65%,
+        rgba(0,15,6,.96) 100%
       );
     }
-
-    .hero-content {
+    .hero-body {
       position: relative; z-index: 1;
       width: 100%; padding: 0 48px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: end;
     }
 
+    .hero-left {}
     .hero-tag {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--lime); margin-bottom: 20px;
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: .68rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--lime); margin-bottom: 18px;
     }
     .hero-tag::before {
       content: ''; width: 6px; height: 6px; background: var(--lime); border-radius: 50%;
       animation: blink 2s infinite;
     }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.15} }
 
     .hero h1 {
-      font-size: clamp(3.2rem, 7vw, 7rem);
-      font-weight: 900; line-height: .98; letter-spacing: -.04em;
-      color: var(--white); margin-bottom: 24px;
+      font-size: clamp(3rem, 6.5vw, 6.4rem);
+      font-weight: 900; line-height: .97; letter-spacing: -.04em;
+      color: var(--white); margin-bottom: 22px;
     }
-    .hero h1 .en { display: block; }
     .hero h1 .ja {
-      display: block; font-size: 0.38em;
-      letter-spacing: .02em; color: rgba(255,255,255,0.75);
-      margin-top: 8px; font-weight: 700;
+      display: block; font-size: .34em; letter-spacing: .01em;
+      color: rgba(255,255,255,.72); margin-top: 10px; font-weight: 700; line-height: 1.5;
     }
-
-    .hero-sub {
-      font-size: .95rem; color: rgba(255,255,255,.65);
-      line-height: 1.85; max-width: 480px; margin-bottom: 40px;
+    .hero-desc {
+      font-size: .93rem; color: rgba(255,255,255,.6); line-height: 1.85;
+      max-width: 440px; margin-bottom: 36px;
     }
+    .hero-btns { display: flex; gap: 10px; flex-wrap: wrap; }
 
-    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    /* Hero right: quick stats */
+    .hero-stats {
+      display: grid; grid-template-columns: repeat(2,1fr); gap: 2px;
+      background: rgba(255,255,255,.06); align-self: end;
+    }
+    .hs-cell { background: rgba(0,0,0,.35); backdrop-filter: blur(8px); padding: 28px 24px; }
+    .hs-n {
+      font-size: 2.4rem; font-weight: 900; letter-spacing: -.04em; color: var(--lime); line-height: 1;
+    }
+    .hs-l { font-size: .74rem; color: rgba(255,255,255,.5); margin-top: 6px; }
 
+    /* ── Buttons ── */
     .btn-lime {
-      display: inline-flex; align-items: center; gap: 6px;
+      display: inline-flex; align-items: center; gap: 5px;
       background: var(--lime); color: var(--g1);
-      padding: 14px 32px; border-radius: 2px;
-      font-size: .87rem; font-weight: 800; letter-spacing: .04em;
-      text-decoration: none; transition: all .2s;
+      padding: 13px 30px; border-radius: 2px;
+      font-size: .85rem; font-weight: 800; letter-spacing: .04em;
+      transition: all .2s;
     }
-    .btn-lime:hover { background: #d9ff33; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,255,0,.3); }
+    .btn-lime:hover { background: #d9ff33; transform: translateY(-2px); box-shadow: 0 8px 22px rgba(200,255,0,.3); }
 
     .btn-ghost {
-      display: inline-flex; align-items: center; gap: 6px;
-      border: 1.5px solid rgba(255,255,255,.35); color: var(--white);
-      padding: 14px 32px; border-radius: 2px;
-      font-size: .87rem; font-weight: 600;
-      text-decoration: none; transition: all .2s;
+      display: inline-flex; align-items: center; gap: 5px;
+      border: 1.5px solid rgba(255,255,255,.3); color: var(--white);
+      padding: 13px 30px; border-radius: 2px;
+      font-size: .85rem; font-weight: 600; transition: all .2s;
     }
     .btn-ghost:hover { border-color: var(--lime); color: var(--lime); }
 
-    /* ===== TICKER ===== */
-    .ticker {
-      background: var(--lime); overflow: hidden; white-space: nowrap; padding: 10px 0;
-    }
-    .ticker-track {
-      display: inline-block;
-      animation: tick 32s linear infinite;
-      font-size: .72rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--g1);
-    }
-    @keyframes tick { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
-    .sep { margin: 0 20px; opacity: .4; }
-
-    /* ===== SECTION SHARED ===== */
-    .sec { padding: 88px 48px; }
-
-    .sec-label {
-      display: flex; align-items: center; gap: 10px;
-      font-size: .68rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
-      color: var(--g4); margin-bottom: 10px;
-    }
-    .sec-label::before { content:''; width:20px; height:2px; background:var(--g4); }
-
-    .sec-heading {
-      font-size: clamp(1.8rem, 3vw, 2.6rem);
-      font-weight: 900; letter-spacing: -.02em; line-height: 1.15; margin-bottom: 10px;
-    }
-    .sec-sub {
-      font-size: .93rem; color: var(--muted); line-height: 1.8; max-width: 520px; margin-bottom: 48px;
-    }
-
-    /* ===== MATCH RESULTS ===== */
-    .match { background: var(--g1); color: var(--white); }
-    .match .sec-label { color: var(--lime); }
-    .match .sec-label::before { background: var(--lime); }
-    .match .sec-heading { color: var(--white); }
-
-    .match-inner { max-width: 1100px; margin: 0 auto; }
-
-    .tabs { display: flex; gap: 6px; margin-bottom: 32px; }
-    .tab {
-      padding: 9px 26px; border-radius: 2px;
-      font-size: .8rem; font-weight: 700; letter-spacing: .06em;
-      border: 1.5px solid rgba(255,255,255,.15); color: rgba(255,255,255,.5);
-      background: transparent; cursor: pointer; transition: all .2s;
-    }
-    .tab.on, .tab:hover { background: var(--lime); color: var(--g1); border-color: var(--lime); }
-
-    .match-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; background: rgba(255,255,255,.06); }
-
-    .match-card { background: var(--g2); padding: 28px; }
-
-    .mc-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-    .mc-date { font-size: .72rem; color: rgba(255,255,255,.4); font-weight: 600; }
-    .mc-badge {
-      font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
-      padding: 3px 8px; background: rgba(255,255,255,.08); color: rgba(255,255,255,.5); border-radius: 2px;
-    }
-
-    .mc-score {
-      display: grid; grid-template-columns: 1fr auto 1fr;
-      align-items: center; gap: 12px; text-align: center;
-    }
-
-    .mc-team { font-size: .82rem; font-weight: 700; color: rgba(255,255,255,.85); line-height: 1.3; }
-    .mc-team.home { text-align: right; }
-    .mc-team.away { text-align: left; }
-
-    .mc-num {
-      display: flex; gap: 6px; align-items: center;
-      font-size: 2.4rem; font-weight: 900; letter-spacing: -.04em; color: var(--g5);
-    }
-    .mc-num.win { color: var(--lime); }
-    .mc-num.loss { color: #ff6b6b; }
-    .mc-dash { font-size: 1.4rem; color: rgba(255,255,255,.2); font-weight: 300; }
-
-    /* ===== PROGRAMS ===== */
-    .programs { background: var(--offwhite); }
-    .prog-inner { max-width: 1100px; margin: 0 auto; }
-
-    /* U-15 featured */
-    .prog-u15 {
-      display: grid; grid-template-columns: 1fr 1fr;
-      border-radius: 8px; overflow: hidden;
-      box-shadow: 0 4px 32px rgba(0,0,0,.08);
-      margin-bottom: 24px;
-    }
-
-    .prog-u15-photo {
-      position: relative; min-height: 440px;
-      overflow: hidden;
-    }
-    .prog-u15-photo img {
-      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-    }
-    .prog-u15-photo::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(90deg, rgba(0,40,16,.6) 0%, transparent 60%);
-    }
-
-    .prog-u15-info {
-      background: var(--g2); color: var(--white); padding: 48px 44px;
-      display: flex; flex-direction: column; justify-content: center;
-    }
-
-    .prog-u15-info .sec-label { color: var(--lime); margin-bottom: 14px; }
-    .prog-u15-info .sec-label::before { background: var(--lime); }
-
-    .prog-u15-info h3 {
-      font-size: 2rem; font-weight: 900; line-height: 1.15;
-      letter-spacing: -.02em; margin-bottom: 28px;
-    }
-
-    .info-rows { display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
-    .info-row { display: flex; gap: 16px; font-size: .87rem; }
-    .info-k {
-      min-width: 72px; font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-      color: rgba(255,255,255,.4); padding-top: 2px;
-    }
-    .info-v { color: rgba(255,255,255,.88); line-height: 1.6; }
-
-    /* Selection flow */
-    .sel-flow { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; background: rgba(255,255,255,.08); }
-    .sel-step { background: var(--g1); padding: 20px 14px; text-align: center; }
-    .sel-n {
-      width: 36px; height: 36px; border-radius: 50%;
+    .btn-green {
+      display: inline-flex; align-items: center; gap: 5px;
       background: var(--g4); color: var(--white);
-      font-size: .78rem; font-weight: 800;
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 10px;
+      padding: 11px 24px; border-radius: 2px;
+      font-size: .82rem; font-weight: 700; transition: all .2s;
     }
-    .sel-title { font-size: .78rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
-    .sel-desc { font-size: .68rem; color: rgba(255,255,255,.45); line-height: 1.5; }
-
-    /* 3 program cards */
-    .prog-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; background: var(--border); }
-
-    .prog-card { background: var(--white); overflow: hidden; }
-    .prog-card:hover .pc-photo img { transform: scale(1.04); }
-
-    .pc-photo { height: 220px; overflow: hidden; position: relative; }
-    .pc-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
-    .pc-photo::after {
-      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
-      background: linear-gradient(transparent, rgba(0,0,0,.3));
-    }
-
-    .pc-tag {
-      position: absolute; top: 14px; left: 14px; z-index: 1;
-      font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-      padding: 4px 9px; border-radius: 2px; background: var(--g4); color: var(--white);
-    }
-    .pc-tag.girls { background: #c0185a; }
-    .pc-tag.academy { background: var(--g1); }
-
-    .pc-body { padding: 24px; }
-    .pc-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 14px; line-height: 1.25; }
-
-    .pc-meta { display: flex; flex-direction: column; gap: 7px; margin-bottom: 18px; }
-    .pc-row { display: flex; gap: 10px; font-size: .82rem; }
-    .pc-k { min-width: 56px; font-size: .68rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; padding-top: 1px; }
-    .pc-v { font-weight: 600; }
-
-    .pc-price { font-size: 1.4rem; font-weight: 900; color: var(--g2); letter-spacing: -.02em; }
-    .pc-price small { font-size: .72rem; font-weight: 400; color: var(--muted); }
-
-    /* ===== ABOUT ===== */
-    .about {
-      background: var(--g1); color: var(--white);
-      position: relative; overflow: hidden;
-    }
-    .about-inner {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
-      max-width: 1100px; margin: 0 auto; position: relative; z-index: 1;
-    }
-    .about .sec-label { color: var(--lime); }
-    .about .sec-label::before { background: var(--lime); }
-    .about .sec-heading { color: var(--white); }
-    .about .sec-sub { color: rgba(255,255,255,.6); }
-
-    .about-watermark {
-      position: absolute; right: -30px; bottom: -60px;
-      font-size: 18rem; font-weight: 900; line-height: 1;
-      color: rgba(255,255,255,.025); letter-spacing: -.05em;
-      pointer-events: none; user-select: none;
-    }
-
-    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: rgba(255,255,255,.08); }
-    .about-stat { background: rgba(255,255,255,.04); padding: 36px 28px; }
-    .as-n { font-size: 3rem; font-weight: 900; letter-spacing: -.04em; color: var(--lime); line-height: 1; }
-    .as-l { font-size: .8rem; color: rgba(255,255,255,.45); margin-top: 6px; }
-
-    /* ===== TOPICS ===== */
-    .topics { background: var(--white); }
-    .topics-inner { display: grid; grid-template-columns: 260px 1fr; gap: 72px; max-width: 1100px; margin: 0 auto; }
-
-    .news-list { display: flex; flex-direction: column; }
-    .news-item {
-      display: grid; grid-template-columns: 82px auto 1fr; align-items: start; gap: 14px;
-      padding: 18px 0; border-bottom: 1px solid var(--border);
-      text-decoration: none; color: var(--text); transition: color .2s;
-    }
-    .news-item:first-child { border-top: 1px solid var(--border); }
-    .news-item:hover { color: var(--g4); }
-
-    .ni-date { font-size: .74rem; color: var(--muted); font-weight: 600; padding-top: 2px; }
-    .ni-tag {
-      font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-      padding: 3px 7px; border-radius: 2px; white-space: nowrap;
-      background: #e6f7ee; color: var(--g2);
-    }
-    .ni-tag.ev { background: #fde8ec; color: #c0185a; }
-    .ni-tag.rp { background: #fdf8e6; color: #7a5a00; }
-    .ni-title { font-size: .9rem; line-height: 1.65; padding-top: 2px; }
-
-    /* ===== SPONSORS ===== */
-    .sponsors { background: var(--offwhite); padding: 72px 48px; }
-    .sp-inner { max-width: 1100px; margin: 0 auto; }
-
-    .sp-heading {
-      text-align: center; font-size: .68rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
-      color: var(--muted); margin-bottom: 40px;
-    }
-
-    .sp-tier { margin-bottom: 32px; }
-    .sp-tier-label {
-      font-size: .62rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
-      color: var(--g4); text-align: center; margin-bottom: 16px;
-    }
-
-    .sp-row {
-      display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
-      gap: 10px;
-    }
-
-    .sp-logo {
-      height: 60px;
-      padding: 10px 20px;
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      display: flex; align-items: center; justify-content: center;
-      transition: border-color .2s, box-shadow .2s;
-    }
-    .sp-logo:hover { border-color: var(--g4); box-shadow: 0 2px 12px rgba(0,120,56,.1); }
-    .sp-logo img { max-height: 40px; max-width: 140px; object-fit: contain; filter: none; }
-
-    .sp-logo.top { height: 72px; padding: 12px 28px; }
-    .sp-logo.top img { max-height: 48px; max-width: 180px; }
-
-    .sp-banner { margin-top: 40px; border-radius: 6px; overflow: hidden; }
-    .sp-banner img { width: 100%; display: block; }
-
-    /* ===== CTA ===== */
-    .cta-sec {
-      background: var(--g4); color: var(--white); text-align: center;
-      padding: 88px 48px; position: relative; overflow: hidden;
-    }
-    .cta-sec::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image: linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
-                        linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
-      background-size: 48px 48px;
-      pointer-events: none;
-    }
-    .cta-inner { position: relative; z-index: 1; }
-    .cta-sec .sec-label { color: var(--lime); justify-content: center; }
-    .cta-sec .sec-label::before { background: var(--lime); }
-    .cta-sec .sec-heading { color: var(--white); }
-    .cta-sec .sec-sub { color: rgba(255,255,255,.75); margin: 0 auto 44px; text-align: center; }
-
-    .cta-btns { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    .btn-green:hover { background: var(--g3); transform: translateY(-1px); }
 
     .btn-white {
-      display: inline-flex; align-items: center; gap: 6px;
+      display: inline-flex; align-items: center; gap: 5px;
       background: var(--white); color: var(--g2);
-      padding: 14px 34px; border-radius: 2px;
-      font-size: .87rem; font-weight: 800;
-      text-decoration: none; transition: all .2s;
+      padding: 13px 30px; border-radius: 2px;
+      font-size: .85rem; font-weight: 800; transition: all .2s;
     }
     .btn-white:hover { background: var(--lime); color: var(--g1); transform: translateY(-2px); }
 
-    .btn-outline-w {
-      display: inline-flex; align-items: center; gap: 6px;
-      border: 1.5px solid rgba(255,255,255,.45); color: var(--white);
-      padding: 14px 34px; border-radius: 2px;
-      font-size: .87rem; font-weight: 600;
-      text-decoration: none; transition: all .2s;
+    .btn-out-w {
+      display: inline-flex; align-items: center; gap: 5px;
+      border: 1.5px solid rgba(255,255,255,.4); color: var(--white);
+      padding: 13px 30px; border-radius: 2px;
+      font-size: .85rem; font-weight: 600; transition: all .2s;
     }
-    .btn-outline-w:hover { border-color: var(--lime); color: var(--lime); }
+    .btn-out-w:hover { border-color: var(--lime); color: var(--lime); }
 
-    /* ===== FOOTER ===== */
-    footer { background: var(--g1); color: rgba(255,255,255,.4); padding: 56px 48px 32px; }
+    /* ── TICKER ── */
+    .ticker { background: var(--lime); overflow: hidden; white-space: nowrap; padding: 9px 0; }
+    .ticker-t {
+      display: inline-block; animation: tick 36s linear infinite;
+      font-size: .7rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; color: var(--g1);
+    }
+    @keyframes tick { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+    .sep { margin: 0 18px; opacity: .35; }
 
-    .ft-inner {
+    /* ── SECTION SHARED ── */
+    .sec { padding: 88px 48px; }
+    .inner { max-width: 1100px; margin: 0 auto; }
+
+    .label {
+      display: flex; align-items: center; gap: 9px;
+      font-size: .65rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--g4); margin-bottom: 8px;
+    }
+    .label::before { content: ''; width: 18px; height: 2px; background: var(--g4); flex-shrink: 0; }
+    .label.lite { color: var(--lime); }
+    .label.lite::before { background: var(--lime); }
+
+    .sh {
+      font-size: clamp(1.75rem,2.8vw,2.5rem);
+      font-weight: 900; letter-spacing: -.02em; line-height: 1.15; margin-bottom: 10px;
+    }
+    .sh.white { color: var(--white); }
+    .sub { font-size: .92rem; color: var(--muted); line-height: 1.82; max-width: 500px; margin-bottom: 44px; }
+    .sub.lite { color: rgba(255,255,255,.58); }
+
+    /* ── MATCH ── */
+    .match { background: var(--g1); }
+    .tabs { display: flex; gap: 5px; margin-bottom: 28px; }
+    .tab {
+      padding: 8px 24px; border-radius: 2px;
+      font-size: .78rem; font-weight: 700; letter-spacing: .06em;
+      border: 1.5px solid rgba(255,255,255,.12); color: rgba(255,255,255,.45);
+      background: transparent; cursor: pointer; transition: all .2s;
+    }
+    .tab.on,.tab:hover { background: var(--lime); color: var(--g1); border-color: var(--lime); }
+
+    .match-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; background: rgba(255,255,255,.05); }
+
+    .mc {
+      background: var(--g2); padding: 26px;
+      border-left: 3px solid transparent; transition: border-color .2s;
+    }
+    .mc:hover { border-left-color: var(--g5); }
+    .mc-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .mc-date { font-size: .7rem; color: rgba(255,255,255,.38); font-weight: 600; }
+    .mc-badge {
+      font-size: .6rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+      padding: 3px 7px; background: rgba(255,255,255,.07); color: rgba(255,255,255,.45); border-radius: 2px;
+    }
+    .mc-score { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; }
+    .mc-team { font-size: .8rem; font-weight: 700; color: rgba(255,255,255,.8); line-height: 1.3; }
+    .mc-team.home { text-align: right; }
+    .mc-num {
+      display: flex; gap: 5px; align-items: center;
+      font-size: 2.2rem; font-weight: 900; letter-spacing: -.04em; color: var(--g5);
+    }
+    .mc-num.win { color: var(--lime); }
+    .mc-num.loss { color: #ff6e6e; }
+    .mc-dash { font-size: 1.2rem; color: rgba(255,255,255,.15); font-weight: 300; }
+
+    /* ── PROGRAMS ── */
+    .programs { background: var(--off); }
+
+    /* U-15 featured */
+    .feat {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-radius: 8px; overflow: hidden;
+      box-shadow: 0 6px 40px rgba(0,0,0,.1); margin-bottom: 20px;
+    }
+    .feat-photo { position: relative; min-height: 460px; overflow: hidden; }
+    .feat-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .feat-photo::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, rgba(0,35,14,.55) 0%, transparent 55%);
+    }
+    .feat-info {
+      background: var(--g2); color: var(--white); padding: 48px 44px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .feat-info .label { margin-bottom: 12px; }
+    .feat-info h3 { font-size: 2rem; font-weight: 900; line-height: 1.1; letter-spacing: -.02em; margin-bottom: 26px; }
+
+    .info-list { display: flex; flex-direction: column; gap: 11px; margin-bottom: 32px; }
+    .ir { display: flex; gap: 14px; font-size: .86rem; }
+    .ik {
+      min-width: 68px; font-size: .66rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(255,255,255,.38); padding-top: 2px; flex-shrink: 0;
+    }
+    .iv { color: rgba(255,255,255,.86); line-height: 1.6; }
+
+    /* sel flow */
+    .sel { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; background: rgba(255,255,255,.07); margin-bottom: 28px; }
+    .ss { background: var(--g1); padding: 18px 12px; text-align: center; }
+    .ss-n {
+      width: 34px; height: 34px; border-radius: 50%; background: var(--g4); color: var(--white);
+      font-size: .76rem; font-weight: 800; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 9px;
+    }
+    .ss-t { font-size: .76rem; font-weight: 700; color: var(--white); margin-bottom: 3px; }
+    .ss-d { font-size: .66rem; color: rgba(255,255,255,.4); line-height: 1.5; }
+
+    /* 3 cards */
+    .prog-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; background: var(--border); }
+    .pc { background: var(--white); overflow: hidden; transition: box-shadow .25s; }
+    .pc:hover { box-shadow: 0 8px 32px rgba(0,80,30,.1); }
+    .pc:hover .pc-img img { transform: scale(1.05); }
+    .pc-img { height: 210px; overflow: hidden; position: relative; }
+    .pc-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+    .pc-img::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 70px;
+      background: linear-gradient(transparent, rgba(0,0,0,.28));
+    }
+    .pc-tag {
+      position: absolute; top: 12px; left: 12px; z-index: 1;
+      font-size: .6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      padding: 4px 8px; border-radius: 2px; background: var(--g4); color: var(--white);
+    }
+    .pc-tag.girls { background: #b5105a; }
+    .pc-tag.acad { background: var(--g1); }
+    .pc-body { padding: 22px; }
+    .pc-ttl { font-size: 1.02rem; font-weight: 800; line-height: 1.25; margin-bottom: 12px; }
+    .pc-meta { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .pc-row { display: flex; gap: 9px; font-size: .8rem; }
+    .pc-k { min-width: 52px; font-size: .66rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; padding-top: 1px; }
+    .pc-v { font-weight: 600; }
+    .pc-price { font-size: 1.35rem; font-weight: 900; color: var(--g2); letter-spacing: -.02em; margin-bottom: 16px; }
+    .pc-price small { font-size: .7rem; font-weight: 400; color: var(--muted); }
+
+    /* ── ABOUT ── */
+    .about { background: var(--g1); position: relative; overflow: hidden; }
+    .about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; position: relative; z-index: 1; }
+    .about-wm {
+      position: absolute; right: -40px; bottom: -70px;
+      font-size: 20rem; font-weight: 900; line-height: 1;
+      color: rgba(255,255,255,.022); letter-spacing: -.05em;
+      pointer-events: none; user-select: none;
+    }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: rgba(255,255,255,.07); }
+    .as { background: rgba(255,255,255,.04); padding: 34px 26px; transition: background .2s; }
+    .as:hover { background: rgba(255,255,255,.07); }
+    .as-n { font-size: 2.8rem; font-weight: 900; letter-spacing: -.04em; color: var(--lime); line-height: 1; }
+    .as-l { font-size: .78rem; color: rgba(255,255,255,.42); margin-top: 6px; }
+
+    /* ── TOPICS ── */
+    .topics { background: var(--white); }
+    .topics-inner { display: grid; grid-template-columns: 240px 1fr; gap: 64px; }
+    .more-link {
+      display: inline-flex; align-items: center; gap: 5px; margin-top: 22px;
+      font-size: .82rem; font-weight: 700; color: var(--g4);
+      border-bottom: 1.5px solid var(--g4); padding-bottom: 2px;
+      transition: color .2s, border-color .2s;
+    }
+    .more-link:hover { color: var(--g3); border-color: var(--g3); }
+
+    .news-list { display: flex; flex-direction: column; }
+    .ni {
+      display: grid; grid-template-columns: 80px auto 1fr; align-items: start; gap: 12px;
+      padding: 17px 0; border-bottom: 1px solid var(--border); color: var(--text); transition: color .2s;
+    }
+    .ni:first-child { border-top: 1px solid var(--border); }
+    .ni:hover { color: var(--g4); }
+    .ni-d { font-size: .72rem; color: var(--muted); font-weight: 600; padding-top: 2px; }
+    .ni-tag {
+      font-size: .6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      padding: 3px 7px; border-radius: 2px; white-space: nowrap;
+      background: #e4f7eb; color: var(--g2);
+    }
+    .ni-tag.ev { background: #fce8ec; color: #b5105a; }
+    .ni-tag.rp { background: #fdf8e4; color: #7a5a00; }
+    .ni-ttl { font-size: .88rem; line-height: 1.65; padding-top: 2px; }
+
+    /* ── SPONSORS ── */
+    .sponsors { background: var(--off); padding: 64px 48px; }
+    .sp-inner { max-width: 1100px; margin: 0 auto; }
+    .sp-hd {
+      text-align: center; font-size: .65rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 36px;
+    }
+    .sp-tier { margin-bottom: 28px; }
+    .sp-lbl {
+      font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--g4); text-align: center; margin-bottom: 14px;
+    }
+    .sp-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; }
+    .sp-logo {
+      height: 58px; padding: 10px 18px;
+      background: var(--white); border: 1px solid var(--border); border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .sp-logo:hover { border-color: var(--g4); box-shadow: 0 2px 12px rgba(0,100,40,.1); }
+    .sp-logo img { max-height: 38px; max-width: 130px; object-fit: contain; }
+    .sp-logo.top { height: 70px; padding: 12px 26px; }
+    .sp-logo.top img { max-height: 46px; max-width: 170px; }
+    .sp-banner { margin-top: 36px; border-radius: 6px; overflow: hidden; }
+    .sp-banner img { width: 100%; }
+
+    /* ── CTA ── */
+    .cta-s {
+      background: var(--g4); color: var(--white); text-align: center;
+      padding: 88px 48px; position: relative; overflow: hidden;
+    }
+    .cta-s::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+                        linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+      background-size: 44px 44px; pointer-events: none;
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta-s .sub { margin: 0 auto 40px; text-align: center; }
+    .cta-btns { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--g1); padding: 56px 48px 28px; }
+    .ft-grid {
       max-width: 1100px; margin: 0 auto;
-      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
-      padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,.07); margin-bottom: 28px;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px;
+      padding-bottom: 36px; border-bottom: 1px solid rgba(255,255,255,.06); margin-bottom: 24px;
     }
-
-    .ft-brand .logo-text { font-size: 1rem; display: block; margin-bottom: 12px; }
-    .ft-brand p { font-size: .78rem; line-height: 1.8; color: rgba(255,255,255,.3); }
-
+    .ft-brand p { font-size: .77rem; line-height: 1.8; color: rgba(255,255,255,.28); margin-top: 10px; }
     .ft-col h4 {
-      font-size: .66rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
-      color: rgba(255,255,255,.45); margin-bottom: 14px;
+      font-size: .64rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+      color: rgba(255,255,255,.4); margin-bottom: 13px;
     }
     .ft-col a {
-      display: block; font-size: .8rem; color: rgba(255,255,255,.38);
-      text-decoration: none; margin-bottom: 8px; transition: color .2s;
+      display: block; font-size: .78rem; color: rgba(255,255,255,.36);
+      margin-bottom: 8px; transition: color .2s;
     }
     .ft-col a:hover { color: var(--lime); }
-
     .ft-bottom {
       max-width: 1100px; margin: 0 auto;
-      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
     }
-
-    .ft-copy { font-size: .73rem; color: rgba(255,255,255,.22); }
-
-    .ft-social { display: flex; gap: 16px; }
+    .ft-copy { font-size: .7rem; color: rgba(255,255,255,.2); }
+    .ft-social { display: flex; gap: 14px; }
     .ft-social a {
-      font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
-      color: rgba(255,255,255,.32); text-decoration: none; transition: color .2s;
+      font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+      color: rgba(255,255,255,.3); transition: color .2s;
     }
     .ft-social a:hover { color: var(--lime); }
+
+    /* ════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════ */
+
+    /* Tablet ≤ 1024px */
+    @media (max-width: 1024px) {
+      .hd-bar { padding: 5px 28px; }
+      .hd-main { padding: 0 28px; }
+      .sec { padding: 72px 28px; }
+      .sponsors { padding: 56px 28px; }
+      footer { padding: 48px 28px 24px; }
+
+      .hero-body { padding: 0 28px; gap: 36px; }
+      .hero h1 { font-size: clamp(2.6rem, 5.5vw, 5rem); }
+
+      .feat { grid-template-columns: 1fr; }
+      .feat-photo { min-height: 320px; }
+      .feat-photo::after { background: linear-gradient(0deg, rgba(0,35,14,.65) 0%, transparent 55%); }
+      .feat-info { padding: 36px 28px; }
+      .feat-info h3 { font-size: 1.6rem; }
+
+      .about-inner { gap: 48px; }
+
+      .ft-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* Tablet ≤ 768px */
+    @media (max-width: 768px) {
+      :root { --hd-h: 56px; }
+
+      /* header */
+      .hd-bar { display: none; }
+      .hd-main { padding: 0 20px; height: 56px; }
+      .hd-nav { display: none; }
+      .burger { display: flex; }
+      .mob-nav { display: flex; }
+
+      /* hero */
+      .hero { padding-bottom: 52px; }
+      .hero-body { grid-template-columns: 1fr; gap: 0; padding: 0 20px; }
+      .hero-stats { display: none; }
+      .hero h1 { font-size: clamp(2.4rem, 8vw, 3.8rem); }
+      .hero h1 .ja { font-size: .38em; }
+
+      /* sections */
+      .sec { padding: 56px 20px; }
+      .sponsors { padding: 48px 20px; }
+      footer { padding: 44px 20px 20px; }
+
+      /* match */
+      .match-grid { grid-template-columns: 1fr; }
+
+      /* programs */
+      .feat { grid-template-columns: 1fr; }
+      .feat-photo { min-height: 260px; }
+      .feat-info { padding: 28px 20px; }
+      .sel { grid-template-columns: repeat(2,1fr); }
+      .prog-grid { grid-template-columns: 1fr; background: none; gap: 12px; }
+
+      /* about */
+      .about-inner { grid-template-columns: 1fr; gap: 36px; }
+      .about-wm { display: none; }
+
+      /* topics */
+      .topics-inner { grid-template-columns: 1fr; gap: 36px; }
+
+      /* footer */
+      .ft-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+    }
+
+    /* Mobile ≤ 480px */
+    @media (max-width: 480px) {
+      .hero h1 { font-size: clamp(2rem, 9vw, 2.8rem); }
+      .hero-btns { flex-direction: column; align-items: flex-start; }
+      .btn-lime, .btn-ghost { width: 100%; justify-content: center; }
+
+      .about-stats { grid-template-columns: 1fr 1fr; }
+
+      .ft-grid { grid-template-columns: 1fr; }
+      .ft-bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
+
+      .cta-btns { flex-direction: column; align-items: center; }
+      .btn-white, .btn-out-w { width: 100%; justify-content: center; }
+
+      .ni { grid-template-columns: 1fr; gap: 6px; }
+      .ni-d { display: none; }
+
+      .mc-score { gap: 6px; }
+      .mc-num { font-size: 1.8rem; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="hd-top">
-      <span class="hd-top-left">NPO法人 秋田スポーツPLUS — 秋田の子どもたちのために</span>
-      <div class="hd-socials">
-        <a href="#">Instagram</a>
-        <a href="#">Facebook</a>
-        <a href="#">YouTube</a>
-        <a href="#">X</a>
-      </div>
+<!-- ── HEADER ── -->
+<header>
+  <div class="hd-bar">
+    <span class="hd-bar-txt">NPO法人 秋田スポーツPLUS — 秋田の子どもたちのために</span>
+    <div class="hd-socials">
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+      <a href="#">YouTube</a>
+      <a href="#">X</a>
     </div>
-    <div class="hd-main">
-      <a class="logo" href="#">
-        <img src="https://akitasports-plus.jp/images/logo/IMG_5741.PNG" alt="ASP">
-        <div class="logo-text"><small>NPO法人</small>秋田スポーツPLUS</div>
-      </a>
-      <nav>
-        <a href="#about">会社概要</a>
-        <a href="#programs">チーム・スクール</a>
-        <a href="#topics">お知らせ</a>
-        <a href="#contact" class="cta">お問い合わせ</a>
-      </nav>
-    </div>
-  </header>
+  </div>
+  <div class="hd-main">
+    <a class="logo" href="#">
+      <img src="https://akitasports-plus.jp/images/logo/IMG_5741.PNG" alt="ASP">
+      <div class="logo-txt"><small>NPO法人</small>秋田スポーツPLUS</div>
+    </a>
+    <nav class="hd-nav">
+      <a href="#about">会社概要</a>
+      <a href="#programs">チーム・スクール</a>
+      <a href="#topics">お知らせ</a>
+      <a href="#contact" class="nav-cta">お問い合わせ</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="mob-nav" id="mob-nav">
+    <a href="#about">会社概要</a>
+    <a href="#programs">チーム・スクール</a>
+    <a href="#topics">お知らせ</a>
+    <a href="#contact" class="nav-cta">お問い合わせ</a>
+  </nav>
+</header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-ov"></div>
+  <div class="hero-body">
+    <div class="hero-left">
       <div class="hero-tag">NPO法人 秋田スポーツPLUS</div>
-      <h1>
-        <span class="en">MOVE FORWARD.</span>
-        <span class="ja">サッカーを通じて、秋田の子どもたちの<br>感動と健やかな成長を育む。</span>
+      <h1>MOVE<br>FORWARD.
+        <span class="ja">サッカーを通じて、秋田の<br>子どもたちの感動と健やかな成長を育む。</span>
       </h1>
-      <p class="hero-sub">
-        一緒にサッカーできるメンバー募集中。<br>
-        年齢・レベルに応じたスクールで、あなたの夢をサポートします。
-      </p>
+      <p class="hero-desc">一緒にサッカーできるメンバー募集中。<br>年齢・レベルに応じたスクールで、あなたの夢をサポートします。</p>
       <div class="hero-btns">
         <a href="#programs" class="btn-lime">スクールを見る →</a>
         <a href="#contact" class="btn-ghost">お問い合わせ</a>
       </div>
     </div>
-  </section>
-
-  <!-- TICKER -->
-  <div class="ticker">
-    <span class="ticker-track">
-      秋田スポーツPLUS <span class="sep">✦</span>
-      ASP U-15 <span class="sep">✦</span>
-      ASP U-12 サッカースクール <span class="sep">✦</span>
-      ASP U-12 Girls スポーツスクール <span class="sep">✦</span>
-      ASP-ACADEMY <span class="sep">✦</span>
-      ゴルフスクール <span class="sep">✦</span>
-      会員募集中 <span class="sep">✦</span>
-      秋田スポーツPLUS <span class="sep">✦</span>
-      ASP U-15 <span class="sep">✦</span>
-      ASP U-12 サッカースクール <span class="sep">✦</span>
-      ASP U-12 Girls スポーツスクール <span class="sep">✦</span>
-      ASP-ACADEMY <span class="sep">✦</span>
-      ゴルフスクール <span class="sep">✦</span>
-      会員募集中 <span class="sep">✦</span>
-    </span>
+    <div class="hero-stats">
+      <div class="hs-cell">
+        <div class="hs-n">10+</div>
+        <div class="hs-l">設立からの年数</div>
+      </div>
+      <div class="hs-cell">
+        <div class="hs-n">850+</div>
+        <div class="hs-l">登録会員数</div>
+      </div>
+      <div class="hs-cell">
+        <div class="hs-n">10名</div>
+        <div class="hs-l">海外留学支援実績</div>
+      </div>
+      <div class="hs-cell">
+        <div class="hs-n">5ヶ国</div>
+        <div class="hs-l">遠征実施国数</div>
+      </div>
+    </div>
   </div>
+</section>
 
-  <!-- MATCH RESULTS -->
-  <section class="sec match">
-    <div class="match-inner">
-      <div class="sec-label">Match Results</div>
-      <h2 class="sec-heading" style="color:white;margin-bottom:28px">試合結果</h2>
-      <div class="tabs">
-        <button class="tab on" data-tab="u15">U-15</button>
-        <button class="tab" data-tab="u14">U-14</button>
-        <button class="tab" data-tab="u13">U-13</button>
+<!-- ── TICKER ── -->
+<div class="ticker">
+  <span class="ticker-t">
+    秋田スポーツPLUS <span class="sep">✦</span>
+    ASP U-15 <span class="sep">✦</span>
+    ASP U-12 サッカースクール <span class="sep">✦</span>
+    ASP U-12 Girls スポーツスクール <span class="sep">✦</span>
+    ASP-ACADEMY <span class="sep">✦</span>
+    ゴルフスクール <span class="sep">✦</span>
+    会員募集中 <span class="sep">✦</span>
+    秋田スポーツPLUS <span class="sep">✦</span>
+    ASP U-15 <span class="sep">✦</span>
+    ASP U-12 サッカースクール <span class="sep">✦</span>
+    ASP U-12 Girls スポーツスクール <span class="sep">✦</span>
+    ASP-ACADEMY <span class="sep">✦</span>
+    ゴルフスクール <span class="sep">✦</span>
+    会員募集中 <span class="sep">✦</span>
+  </span>
+</div>
+
+<!-- ── MATCH RESULTS ── -->
+<section class="sec match">
+  <div class="inner">
+    <div class="label lite reveal">Match Results</div>
+    <h2 class="sh white reveal" style="margin-bottom:26px">試合結果</h2>
+    <div class="tabs reveal">
+      <button class="tab on">U-15</button>
+      <button class="tab">U-14</button>
+      <button class="tab">U-13</button>
+    </div>
+    <div class="match-grid reveal">
+      <div class="mc">
+        <div class="mc-top"><span class="mc-date">2026.03.15</span><span class="mc-badge">秋田県リーグ</span></div>
+        <div class="mc-score">
+          <div class="mc-team home">ASP U-15</div>
+          <div class="mc-num win">3<span class="mc-dash">–</span>1</div>
+          <div class="mc-team away">秋田FC Jr.</div>
+        </div>
       </div>
-      <div class="match-grid" id="match-u15">
-        <div class="match-card">
-          <div class="mc-meta">
-            <span class="mc-date">2026.03.15</span>
-            <span class="mc-badge">秋田県リーグ</span>
-          </div>
-          <div class="mc-score">
-            <div class="mc-team home">ASP U-15</div>
-            <div class="mc-num win">3 <span class="mc-dash">–</span> 1</div>
-            <div class="mc-team away">秋田FC Jr.</div>
-          </div>
+      <div class="mc">
+        <div class="mc-top"><span class="mc-date">2026.03.08</span><span class="mc-badge">秋田県リーグ</span></div>
+        <div class="mc-score">
+          <div class="mc-team home">ASP U-15</div>
+          <div class="mc-num win">2<span class="mc-dash">–</span>0</div>
+          <div class="mc-team away">能代FC</div>
         </div>
-        <div class="match-card">
-          <div class="mc-meta">
-            <span class="mc-date">2026.03.08</span>
-            <span class="mc-badge">秋田県リーグ</span>
-          </div>
-          <div class="mc-score">
-            <div class="mc-team home">ASP U-15</div>
-            <div class="mc-num win">2 <span class="mc-dash">–</span> 0</div>
-            <div class="mc-team away">能代FC</div>
-          </div>
-        </div>
-        <div class="match-card">
-          <div class="mc-meta">
-            <span class="mc-date">2026.02.28</span>
-            <span class="mc-badge">招待試合</span>
-          </div>
-          <div class="mc-score">
-            <div class="mc-team home">ASP U-15</div>
-            <div class="mc-num loss">1 <span class="mc-dash">–</span> 2</div>
-            <div class="mc-team away">秋田SC Jr.</div>
-          </div>
+      </div>
+      <div class="mc">
+        <div class="mc-top"><span class="mc-date">2026.02.28</span><span class="mc-badge">招待試合</span></div>
+        <div class="mc-score">
+          <div class="mc-team home">ASP U-15</div>
+          <div class="mc-num loss">1<span class="mc-dash">–</span>2</div>
+          <div class="mc-team away">秋田SC Jr.</div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- PROGRAMS -->
-  <section class="sec programs" id="programs">
-    <div class="prog-inner">
-      <div class="sec-label">Programs</div>
-      <h2 class="sec-heading">チーム・スクール</h2>
-      <p class="sec-sub">年代・目的に応じた5つのプログラム。それぞれの目標に合わせて選べます。</p>
+<!-- ── PROGRAMS ── -->
+<section class="sec programs" id="programs">
+  <div class="inner">
+    <div class="label reveal">Programs</div>
+    <h2 class="sh reveal">チーム・スクール</h2>
+    <p class="sub reveal">年代・目的に応じた5つのプログラム。それぞれの目標に合わせてお選びいただけます。</p>
 
-      <!-- U-15 Featured -->
-      <div class="prog-u15">
-        <div class="prog-u15-photo">
-          <img src="https://akitasports-plus.jp/images/junia/junia2.jpg" alt="ASP U-15">
+    <!-- U-15 featured -->
+    <div class="feat reveal">
+      <div class="feat-photo">
+        <img src="https://akitasports-plus.jp/images/junia/junia2.jpg" alt="ASP U-15">
+      </div>
+      <div class="feat-info">
+        <div class="label lite">Flagship — U-15</div>
+        <h3>ASP U-15<br>ジュニアユース</h3>
+        <div class="info-list">
+          <div class="ir"><span class="ik">対象</span><span class="iv">中学生（セレクション制・各学年20名）</span></div>
+          <div class="ir"><span class="ik">日時</span><span class="iv">火・木・金 19:00〜21:00<br>土・日・祝：試合、遠征、トレーニング</span></div>
+          <div class="ir"><span class="ik">月会費</span><span class="iv">¥13,500</span></div>
+          <div class="ir"><span class="ik">場所</span><span class="iv">秋田市内公共施設</span></div>
         </div>
-        <div class="prog-u15-info">
-          <div class="sec-label">Flagship — U-15</div>
-          <h3>ASP U-15<br>ジュニアユース</h3>
-          <div class="info-rows">
-            <div class="info-row">
-              <span class="info-k">対象</span>
-              <span class="info-v">中学生（セレクション制・各学年20名）</span>
-            </div>
-            <div class="info-row">
-              <span class="info-k">日時</span>
-              <span class="info-v">火・木・金 19:00〜21:00<br>土・日・祝：試合、遠征、トレーニング</span>
-            </div>
-            <div class="info-row">
-              <span class="info-k">月会費</span>
-              <span class="info-v">¥13,500</span>
-            </div>
-            <div class="info-row">
-              <span class="info-k">場所</span>
-              <span class="info-v">秋田市内公共施設</span>
-            </div>
+        <div class="sel">
+          <div class="ss"><div class="ss-n">1</div><div class="ss-t">説明会</div><div class="ss-d">活動・費用の案内</div></div>
+          <div class="ss"><div class="ss-n">2</div><div class="ss-t">1次選考</div><div class="ss-d">技術・判断力・体力</div></div>
+          <div class="ss"><div class="ss-n">3</div><div class="ss-t">2次選考</div><div class="ss-d">ゲーム形式の実践</div></div>
+          <div class="ss"><div class="ss-n">4</div><div class="ss-t">合格・入会</div><div class="ss-d">合格者のみ参加可</div></div>
+        </div>
+        <a href="#contact" class="btn-lime">セレクション申込 →</a>
+      </div>
+    </div>
+
+    <!-- 3 cards -->
+    <div class="prog-grid">
+      <div class="pc reveal">
+        <div class="pc-img">
+          <span class="pc-tag">U-12</span>
+          <img src="https://akitasports-plus.jp/images/junia/junia.jpg" alt="U-12">
+        </div>
+        <div class="pc-body">
+          <div class="pc-ttl">ASP U-12<br>サッカースクール</div>
+          <div class="pc-meta">
+            <div class="pc-row"><span class="pc-k">対象</span><span class="pc-v">小4〜小6</span></div>
+            <div class="pc-row"><span class="pc-k">定員</span><span class="pc-v">各学年25名</span></div>
+            <div class="pc-row"><span class="pc-k">場所</span><span class="pc-v">秋田市内グラウンド</span></div>
           </div>
-          <div class="sel-flow" style="margin-bottom:28px">
-            <div class="sel-step">
-              <div class="sel-n">1</div>
-              <div class="sel-title">説明会</div>
-              <div class="sel-desc">活動・費用の案内</div>
-            </div>
-            <div class="sel-step">
-              <div class="sel-n">2</div>
-              <div class="sel-title">1次選考</div>
-              <div class="sel-desc">技術・判断力・体力</div>
-            </div>
-            <div class="sel-step">
-              <div class="sel-n">3</div>
-              <div class="sel-title">2次選考</div>
-              <div class="sel-desc">ゲーム形式の実践</div>
-            </div>
-            <div class="sel-step">
-              <div class="sel-n">4</div>
-              <div class="sel-title">合格・入会</div>
-              <div class="sel-desc">合格者のみ参加可</div>
-            </div>
-          </div>
-          <a href="#contact" class="btn-lime">セレクション申込 →</a>
+          <div class="pc-price">¥6,000<small>/月</small></div>
+          <a href="#contact" class="btn-green">申込・詳細 →</a>
         </div>
       </div>
-
-      <!-- 3 cards -->
-      <div class="prog-grid">
-        <div class="prog-card">
-          <div class="pc-photo">
-            <span class="pc-tag">U-12</span>
-            <img src="https://akitasports-plus.jp/images/junia/junia.jpg" alt="U-12">
-          </div>
-          <div class="pc-body">
-            <div class="pc-title">ASP U-12<br>サッカースクール</div>
-            <div class="pc-meta">
-              <div class="pc-row"><span class="pc-k">対象</span><span class="pc-v">小4〜小6</span></div>
-              <div class="pc-row"><span class="pc-k">定員</span><span class="pc-v">各学年25名</span></div>
-              <div class="pc-row"><span class="pc-k">場所</span><span class="pc-v">秋田市内グラウンド</span></div>
-            </div>
-            <div class="pc-price">¥6,000<small>/月</small></div>
-          </div>
+      <div class="pc reveal" style="transition-delay:.1s">
+        <div class="pc-img">
+          <span class="pc-tag girls">Girls</span>
+          <img src="https://akitasports-plus.jp/images/img/IMG_5750.JPG" alt="Girls">
         </div>
-        <div class="prog-card">
-          <div class="pc-photo">
-            <span class="pc-tag girls">Girls</span>
-            <img src="https://akitasports-plus.jp/images/img/IMG_5750.JPG" alt="Girls">
+        <div class="pc-body">
+          <div class="pc-ttl">ASP U-12<br>Girls スポーツスクール</div>
+          <div class="pc-meta">
+            <div class="pc-row"><span class="pc-k">対象</span><span class="pc-v">小1〜中1</span></div>
+            <div class="pc-row"><span class="pc-k">日時</span><span class="pc-v">毎週土曜 9:00〜10:45</span></div>
+            <div class="pc-row"><span class="pc-k">場所</span><span class="pc-v">みんなの体育館やばせ</span></div>
           </div>
-          <div class="pc-body">
-            <div class="pc-title">ASP U-12<br>Girls スポーツスクール</div>
-            <div class="pc-meta">
-              <div class="pc-row"><span class="pc-k">対象</span><span class="pc-v">小1〜中1</span></div>
-              <div class="pc-row"><span class="pc-k">日時</span><span class="pc-v">毎週土曜 9:00〜10:45</span></div>
-              <div class="pc-row"><span class="pc-k">場所</span><span class="pc-v">みんなの体育館やばせ</span></div>
-            </div>
-            <div class="pc-price">¥6,000<small>/月</small></div>
-          </div>
+          <div class="pc-price">¥6,000<small>/月</small></div>
+          <a href="#contact" class="btn-green">申込・詳細 →</a>
         </div>
-        <div class="prog-card">
-          <div class="pc-photo">
-            <span class="pc-tag academy">ACADEMY</span>
-            <img src="https://akitasports-plus.jp/images/img/IMG_5758.JPG" alt="Academy">
+      </div>
+      <div class="pc reveal" style="transition-delay:.2s">
+        <div class="pc-img">
+          <span class="pc-tag acad">ACADEMY</span>
+          <img src="https://akitasports-plus.jp/images/img/IMG_5758.JPG" alt="Academy">
+        </div>
+        <div class="pc-body">
+          <div class="pc-ttl">ASP-ACADEMY</div>
+          <div class="pc-meta">
+            <div class="pc-row"><span class="pc-k">対象</span><span class="pc-v">小5〜小6（セレクション制）</span></div>
+            <div class="pc-row"><span class="pc-k">定員</span><span class="pc-v">30〜35名</span></div>
+            <div class="pc-row"><span class="pc-k">日時</span><span class="pc-v">土・日・月 19:00〜21:00</span></div>
           </div>
-          <div class="pc-body">
-            <div class="pc-title">ASP-ACADEMY</div>
-            <div class="pc-meta">
-              <div class="pc-row"><span class="pc-k">対象</span><span class="pc-v">小5〜小6（セレクション制）</span></div>
-              <div class="pc-row"><span class="pc-k">定員</span><span class="pc-v">30〜35名</span></div>
-              <div class="pc-row"><span class="pc-k">日時</span><span class="pc-v">土・日・月 19:00〜21:00</span></div>
-            </div>
-            <div class="pc-price">¥6,950<small>/月</small></div>
-          </div>
+          <div class="pc-price">¥6,950<small>/月</small></div>
+          <a href="#contact" class="btn-green">申込・詳細 →</a>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ABOUT -->
-  <section class="sec about" id="about">
+<!-- ── ABOUT ── -->
+<section class="sec about" id="about">
+  <div class="inner">
     <div class="about-inner">
-      <div>
-        <div class="sec-label">About</div>
-        <h2 class="sec-heading" style="color:white">サッカーを通じて、<br>子どもたちの感動と<br>健やかな成長を育む。</h2>
-        <p class="sec-sub">
-          競技、年齢、求めるレベルに応じたスポーツの機会を提供するとともに、
+      <div class="reveal">
+        <div class="label lite">About</div>
+        <h2 class="sh white">サッカーを通じて、<br>子どもたちの感動と<br>健やかな成長を育む。</h2>
+        <p class="sub lite">
+          競技・年齢・求めるレベルに応じたスポーツの機会を提供するとともに、
           秋田の子どもたちのスポーツ環境の改善を行うことで
           秋田の競技力向上、健全育成、スポーツによる生きがいの創出に寄与します。
         </p>
         <a href="#contact" class="btn-ghost">団体概要を見る →</a>
       </div>
-      <div class="about-stats">
-        <div class="about-stat">
-          <div class="as-n">10+</div><div class="as-l">設立からの年数</div>
-        </div>
-        <div class="about-stat">
-          <div class="as-n">850+</div><div class="as-l">登録会員数</div>
-        </div>
-        <div class="about-stat">
-          <div class="as-n">10名</div><div class="as-l">海外留学支援実績</div>
-        </div>
-        <div class="about-stat">
-          <div class="as-n">5ヶ国</div><div class="as-l">遠征実施国数</div>
-        </div>
+      <div class="about-stats reveal">
+        <div class="as"><div class="as-n">10+</div><div class="as-l">設立からの年数</div></div>
+        <div class="as"><div class="as-n">850+</div><div class="as-l">登録会員数</div></div>
+        <div class="as"><div class="as-n">10名</div><div class="as-l">海外留学支援実績</div></div>
+        <div class="as"><div class="as-n">5ヶ国</div><div class="as-l">遠征実施国数</div></div>
       </div>
     </div>
-    <div class="about-watermark">ASP</div>
-  </section>
+  </div>
+  <div class="about-wm">ASP</div>
+</section>
 
-  <!-- TOPICS -->
-  <section class="sec topics" id="topics">
+<!-- ── TOPICS ── -->
+<section class="sec topics" id="topics">
+  <div class="inner">
     <div class="topics-inner">
-      <div>
-        <div class="sec-label">Topics</div>
-        <h2 class="sec-heading">最新情報</h2>
-        <p class="sec-sub">活動レポート、イベント情報、募集案内を随時更新しています。</p>
-        <a href="#" style="display:inline-flex;align-items:center;gap:6px;margin-top:24px;text-decoration:none;font-size:.84rem;font-weight:700;color:var(--g4);border-bottom:1.5px solid var(--g4);padding-bottom:2px;">全て見る →</a>
+      <div class="reveal">
+        <div class="label">Topics</div>
+        <h2 class="sh">最新情報</h2>
+        <p class="sub">活動レポート、イベント情報、募集案内を随時更新しています。</p>
+        <a href="#" class="more-link">全て見る →</a>
       </div>
-      <div class="news-list">
-        <a href="#" class="news-item">
-          <span class="ni-date">2026.03.15</span>
-          <span class="ni-tag ev">EVENT</span>
-          <span class="ni-title">春季スポーツフェスタ 参加者募集のお知らせ</span>
+      <div class="news-list reveal">
+        <a href="#" class="ni">
+          <span class="ni-d">2026.03.15</span><span class="ni-tag ev">EVENT</span>
+          <span class="ni-ttl">春季スポーツフェスタ 参加者募集のお知らせ</span>
         </a>
-        <a href="#" class="news-item">
-          <span class="ni-date">2026.03.01</span>
-          <span class="ni-tag">INFO</span>
-          <span class="ni-title">月会費制女子スポーツスクール 体験参加選手募集中</span>
+        <a href="#" class="ni">
+          <span class="ni-d">2026.03.01</span><span class="ni-tag">INFO</span>
+          <span class="ni-ttl">月会費制女子スポーツスクール 体験参加選手募集中</span>
         </a>
-        <a href="#" class="news-item">
-          <span class="ni-date">2026.02.20</span>
-          <span class="ni-tag rp">REPORT</span>
-          <span class="ni-title">U-15 秋田県リーグ第2節 試合結果のご報告</span>
+        <a href="#" class="ni">
+          <span class="ni-d">2026.02.20</span><span class="ni-tag rp">REPORT</span>
+          <span class="ni-ttl">U-15 秋田県リーグ第2節 試合結果のご報告</span>
         </a>
-        <a href="#" class="news-item">
-          <span class="ni-date">2026.02.10</span>
-          <span class="ni-tag">INFO</span>
-          <span class="ni-title">クラブニュースレター 2月号を発行しました</span>
+        <a href="#" class="ni">
+          <span class="ni-d">2026.02.10</span><span class="ni-tag">INFO</span>
+          <span class="ni-ttl">クラブニュースレター 2月号を発行しました</span>
         </a>
-        <a href="#" class="news-item">
-          <span class="ni-date">2026.01.25</span>
-          <span class="ni-tag ev">EVENT</span>
-          <span class="ni-title">ASP-ACADEMY 2026年度セレクション開催のご案内</span>
+        <a href="#" class="ni">
+          <span class="ni-d">2026.01.25</span><span class="ni-tag ev">EVENT</span>
+          <span class="ni-ttl">ASP-ACADEMY 2026年度セレクション開催のご案内</span>
         </a>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- SPONSORS -->
-  <section class="sponsors">
-    <div class="sp-inner">
-      <div class="sp-heading">Official Partners &amp; Sponsors — 秋田の企業は、子供たちを応援しています。</div>
+<!-- ── SPONSORS ── -->
+<section class="sponsors">
+  <div class="sp-inner">
+    <div class="sp-hd reveal">Official Partners &amp; Sponsors — 秋田の企業は、子供たちを応援しています。</div>
 
-      <div class="sp-tier">
-        <div class="sp-tier-label">Official Top Partner</div>
-        <div class="sp-row">
-          <div class="sp-logo top"><img src="https://akitasports-plus.jp/images/sponsor/campus21.png" alt="Campus21"></div>
-        </div>
-      </div>
-
-      <div class="sp-tier">
-        <div class="sp-tier-label">Official Partners</div>
-        <div class="sp-row">
-          <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/%E3%82%B5%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%9B%E3%83%BC%E3%83%A0%E6%A7%98.png" alt="サンコーホーム"></div>
-          <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/nishioka.png" alt="haru.s西岡メディカル"></div>
-          <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/azuma-company.png" alt="アズマカンパニー"></div>
-          <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/ttk.png" alt="トラスト・トレーディング"></div>
-          <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/konishiTire_logo_Color.jpg" alt="コニシタイヤ"></div>
-          <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/tohoku-risk.png" alt="東北リスクマネジメント"></div>
-          <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/tohokudenzai.png" alt="東北電材"></div>
-        </div>
-      </div>
-
-      <div class="sp-tier">
-        <div class="sp-tier-label">Sponsors</div>
-        <div class="sp-row">
-          <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/%E5%85%AB%E6%A3%AE%E9%81%8B%E8%BC%B8%E3%83%8F%E3%82%99%E3%83%8A%E3%83%BC.png" alt="八森運輸"></div>
-          <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/kasizagi-d.png" alt="KASHIWAGI DENTAL"></div>
-          <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/s-e.png" alt="Egen-Delta"></div>
-          <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/inex.png" alt="INEX"></div>
-          <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/prestige%20international.png" alt="Prestige International"></div>
-          <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/activate.jpg" alt="activate"></div>
-          <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/procare-akita.png" alt="プロケアあきた"></div>
-          <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/%E7%80%AC%E8%B0%B7%E6%A7%98.png" alt="瀬谷工作所"></div>
-        </div>
-      </div>
-
-      <div class="sp-banner">
-        <img src="https://akitasports-plus.jp/images/%E3%83%90%E3%83%8A%E3%83%BC/sponsor-banner.png" alt="スポンサーバナー">
+    <div class="sp-tier reveal">
+      <div class="sp-lbl">Official Top Partner</div>
+      <div class="sp-row">
+        <div class="sp-logo top"><img src="https://akitasports-plus.jp/images/sponsor/campus21.png" alt="Campus21"></div>
       </div>
     </div>
-  </section>
 
-  <!-- CTA -->
-  <section class="cta-sec" id="contact">
-    <div class="cta-inner">
-      <div class="sec-label">Contact</div>
-      <h2 class="sec-heading">一緒に動こう。</h2>
-      <p class="sec-sub">入会・セレクション・ご支援・取材など、お気軽にお問い合わせください。</p>
-      <div class="cta-btns">
-        <a href="https://akitasports-plus.jp" class="btn-white">お問い合わせフォーム →</a>
-        <a href="#" class="btn-outline-w">スポンサーについて</a>
+    <div class="sp-tier reveal">
+      <div class="sp-lbl">Official Partners</div>
+      <div class="sp-row">
+        <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/%E3%82%B5%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%9B%E3%83%BC%E3%83%A0%E6%A7%98.png" alt="サンコーホーム"></div>
+        <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/nishioka.png" alt="haru.s西岡メディカル"></div>
+        <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/azuma-company.png" alt="アズマカンパニー"></div>
+        <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/ttk.png" alt="トラスト・トレーディング"></div>
+        <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/konishiTire_logo_Color.jpg" alt="コニシタイヤ"></div>
+        <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/tohoku-risk.png" alt="東北リスクマネジメント"></div>
+        <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/tohokudenzai.png" alt="東北電材"></div>
       </div>
     </div>
-  </section>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="ft-inner">
-      <div class="ft-brand">
-        <span class="logo-text">秋田スポーツPLUS</span>
-        <p>サッカーを通じて、子どもたちの感動と健やかな成長を育む。<br>秋田発のNPO法人。</p>
-      </div>
-      <div class="ft-col">
-        <h4>クラブ情報</h4>
-        <a href="#">クラブ概要</a>
-        <a href="#">スタッフ一覧</a>
-        <a href="#">施設紹介</a>
-      </div>
-      <div class="ft-col">
-        <h4>チーム・スクール</h4>
-        <a href="#">ジュニアユース</a>
-        <a href="#">U-12 サッカースクール</a>
-        <a href="#">Girls スクール</a>
-        <a href="#">ASPアカデミー</a>
-        <a href="#">ゴルフスクール</a>
-      </div>
-      <div class="ft-col">
-        <h4>お知らせ</h4>
-        <a href="#">最新ニュース</a>
-        <a href="#">試合スケジュール</a>
-        <a href="#">加藤公平ブログ</a>
-        <a href="#">お問い合わせ</a>
+    <div class="sp-tier reveal">
+      <div class="sp-lbl">Sponsors</div>
+      <div class="sp-row">
+        <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/%E5%85%AB%E6%A3%AE%E9%81%8B%E8%BC%B8%E3%83%8F%E3%82%99%E3%83%8A%E3%83%BC.png" alt="八森運輸"></div>
+        <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/kasizagi-d.png" alt="KASHIWAGI DENTAL"></div>
+        <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/s-e.png" alt="Egen-Delta"></div>
+        <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/inex.png" alt="INEX"></div>
+        <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/prestige%20international.png" alt="Prestige International"></div>
+        <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/activate.jpg" alt="activate"></div>
+        <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/procare-akita.png" alt="プロケアあきた"></div>
+        <div class="sp-logo"><img src="https://akitasports-plus.jp/images/sponsor/%E7%80%AC%E8%B0%B7%E6%A7%98.png" alt="瀬谷工作所"></div>
       </div>
     </div>
-    <div class="ft-bottom">
-      <div class="ft-copy">&copy; 2026 NPO法人 秋田スポーツPLUS. All Rights Reserved.</div>
-      <div class="ft-social">
-        <a href="#">Instagram</a>
-        <a href="#">Facebook</a>
-        <a href="#">YouTube</a>
-        <a href="#">X</a>
-      </div>
-    </div>
-  </footer>
 
-  <script>
-    document.querySelectorAll('.tab').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(b => b.classList.remove('on'));
-        btn.classList.add('on');
-      });
+    <div class="sp-banner reveal">
+      <img src="https://akitasports-plus.jp/images/%E3%83%90%E3%83%8A%E3%83%BC/sponsor-banner.png" alt="スポンサーバナー">
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-s" id="contact">
+  <div class="cta-inner reveal">
+    <div class="label lite" style="justify-content:center">Contact</div>
+    <h2 class="sh white" style="margin-bottom:12px">一緒に動こう。</h2>
+    <p class="sub lite">入会・セレクション・ご支援・取材など、お気軽にお問い合わせください。</p>
+    <div class="cta-btns">
+      <a href="https://akitasports-plus.jp" class="btn-white">お問い合わせフォーム →</a>
+      <a href="#" class="btn-out-w">スポンサーについて</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="ft-grid">
+    <div class="ft-brand">
+      <a class="logo" href="#" style="margin-bottom:0">
+        <img src="https://akitasports-plus.jp/images/logo/IMG_5741.PNG" alt="ASP" style="width:32px;height:32px">
+        <div class="logo-txt"><small>NPO法人</small>秋田スポーツPLUS</div>
+      </a>
+      <p>サッカーを通じて、子どもたちの感動と<br>健やかな成長を育む。秋田発のNPO法人。</p>
+    </div>
+    <div class="ft-col">
+      <h4>クラブ情報</h4>
+      <a href="#">クラブ概要</a>
+      <a href="#">スタッフ一覧</a>
+      <a href="#">施設紹介</a>
+    </div>
+    <div class="ft-col">
+      <h4>チーム・スクール</h4>
+      <a href="#">ジュニアユース</a>
+      <a href="#">U-12 サッカースクール</a>
+      <a href="#">Girls スクール</a>
+      <a href="#">ASPアカデミー</a>
+      <a href="#">ゴルフスクール</a>
+    </div>
+    <div class="ft-col">
+      <h4>お知らせ</h4>
+      <a href="#">最新ニュース</a>
+      <a href="#">試合スケジュール</a>
+      <a href="#">加藤公平ブログ</a>
+      <a href="#">お問い合わせ</a>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <div class="ft-copy">&copy; 2026 NPO法人 秋田スポーツPLUS. All Rights Reserved.</div>
+    <div class="ft-social">
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+      <a href="#">YouTube</a>
+      <a href="#">X</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── Hamburger ──
+  const burger = document.getElementById('burger');
+  const mobNav = document.getElementById('mob-nav');
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    mobNav.classList.toggle('open');
+  });
+  mobNav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      burger.classList.remove('open');
+      mobNav.classList.remove('open');
     });
-  </script>
+  });
+
+  // ── Tab switch ──
+  document.querySelectorAll('.tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+    });
+  });
+
+  // ── Scroll reveal ──
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
 </body>
 </html>
