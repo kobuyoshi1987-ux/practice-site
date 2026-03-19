@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>スポーツNPO さくらFC</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* ヘッダー */
+    header {
+      background-color: #1a3c6e;
+      color: white;
+      padding: 16px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .logo span {
+      color: #f0a500;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 28px;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: #f0a500;
+    }
+
+    /* ヒーロー */
+    .hero {
+      background: linear-gradient(135deg, #1a3c6e 0%, #2e6db4 100%);
+      color: white;
+      text-align: center;
+      padding: 100px 20px;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      line-height: 1.3;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      max-width: 600px;
+      margin: 0 auto 40px;
+      opacity: 0.9;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: #f0a500;
+      color: white;
+      padding: 14px 36px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: background-color 0.2s;
+    }
+
+    .btn:hover {
+      background-color: #d4900a;
+    }
+
+    /* セクション共通 */
+    section {
+      padding: 72px 40px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+      color: #1a3c6e;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: #777;
+      margin-bottom: 48px;
+      font-size: 0.95rem;
+    }
+
+    /* 活動紹介 */
+    .activities {
+      background-color: #f8f9fc;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 28px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 32px 24px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .card-icon {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      color: #1a3c6e;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    /* お知らせ */
+    .news-list {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .news-item {
+      display: flex;
+      gap: 20px;
+      padding: 18px 0;
+      border-bottom: 1px solid #e8e8e8;
+    }
+
+    .news-date {
+      font-size: 0.85rem;
+      color: #999;
+      min-width: 90px;
+      padding-top: 2px;
+    }
+
+    .news-tag {
+      background-color: #1a3c6e;
+      color: white;
+      font-size: 0.75rem;
+      padding: 2px 10px;
+      border-radius: 3px;
+      height: fit-content;
+      white-space: nowrap;
+    }
+
+    .news-item a {
+      color: #333;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .news-item a:hover {
+      color: #1a3c6e;
+      text-decoration: underline;
+    }
+
+    /* 数字で見る */
+    .stats {
+      background-color: #1a3c6e;
+      color: white;
+    }
+
+    .stats .section-title {
+      color: white;
+    }
+
+    .stats .section-subtitle {
+      color: rgba(255,255,255,0.7);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 32px;
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #f0a500;
+      line-height: 1;
+    }
+
+    .stat-unit {
+      font-size: 1.2rem;
+      color: #f0a500;
+    }
+
+    .stat-label {
+      margin-top: 8px;
+      font-size: 0.9rem;
+      opacity: 0.85;
+    }
+
+    /* お問い合わせ */
+    .contact {
+      background-color: #f8f9fc;
+      text-align: center;
+    }
+
+    .contact p {
+      color: #666;
+      margin-bottom: 28px;
+    }
+
+    /* フッター */
+    footer {
+      background-color: #111;
+      color: #aaa;
+      text-align: center;
+      padding: 28px 20px;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ヘッダー -->
+  <header>
+    <div class="logo">NPO <span>さくらFC</span></div>
+    <nav>
+      <a href="#activities">活動内容</a>
+      <a href="#news">お知らせ</a>
+      <a href="#about">団体概要</a>
+      <a href="#contact">お問い合わせ</a>
+    </nav>
+  </header>
+
+  <!-- ヒーロー -->
+  <section class="hero">
+    <h1>スポーツで、<br>地域をつなぐ。</h1>
+    <p>さくらFCは、子どもから大人まで誰もがスポーツを楽しめる環境づくりを目指すNPO法人です。</p>
+    <a href="#activities" class="btn">活動を見る</a>
+  </section>
+
+  <!-- 活動内容 -->
+  <section class="activities" id="activities">
+    <h2 class="section-title">活動内容</h2>
+    <p class="section-subtitle">地域の皆さんとともに、さまざまなスポーツ活動を展開しています。</p>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">⚽</div>
+        <h3>ジュニアスクール</h3>
+        <p>小学生を対象としたサッカー教室。技術だけでなく仲間を大切にする心を育てます。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏃</div>
+        <h3>地域スポーツ大会</h3>
+        <p>年2回開催する地域交流マラソン・スポーツフェスタ。年齢問わず参加できます。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">♿</div>
+        <h3>インクルーシブ活動</h3>
+        <p>障害のある方も一緒に楽しめるスポーツプログラムを月2回実施しています。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎓</div>
+        <h3>指導者育成</h3>
+        <p>地域のスポーツ指導者を増やすための講習会・研修を定期的に開催しています。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- お知らせ -->
+  <section id="news">
+    <h2 class="section-title">お知らせ</h2>
+    <p class="section-subtitle">最新の活動情報をお届けします。</p>
+    <div class="news-list">
+      <div class="news-item">
+        <span class="news-date">2026.03.15</span>
+        <span class="news-tag">イベント</span>
+        <a href="#">春季スポーツフェスタの参加者募集を開始しました</a>
+      </div>
+      <div class="news-item">
+        <span class="news-date">2026.03.01</span>
+        <span class="news-tag">お知らせ</span>
+        <a href="#">2026年度 ジュニアスクール新規入会受付のご案内</a>
+      </div>
+      <div class="news-item">
+        <span class="news-date">2026.02.20</span>
+        <span class="news-tag">活動報告</span>
+        <a href="#">第12回 地域交流マラソン大会を開催しました</a>
+      </div>
+      <div class="news-item">
+        <span class="news-date">2026.02.05</span>
+        <span class="news-tag">お知らせ</span>
+        <a href="#">ボランティアスタッフ募集のご案内</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 数字で見る -->
+  <section class="stats" id="about">
+    <h2 class="section-title">数字で見るさくらFC</h2>
+    <p class="section-subtitle">設立から15年、地域とともに歩んできました。</p>
+    <div class="stats-grid">
+      <div>
+        <div class="stat-number">850<span class="stat-unit">+</span></div>
+        <div class="stat-label">登録会員数</div>
+      </div>
+      <div>
+        <div class="stat-number">15<span class="stat-unit">年</span></div>
+        <div class="stat-label">設立からの年数</div>
+      </div>
+      <div>
+        <div class="stat-number">42<span class="stat-unit">回</span></div>
+        <div class="stat-label">累計イベント開催数</div>
+      </div>
+      <div>
+        <div class="stat-number">120<span class="stat-unit">人</span></div>
+        <div class="stat-label">ボランティアスタッフ</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- お問い合わせ -->
+  <section class="contact" id="contact">
+    <h2 class="section-title">お問い合わせ</h2>
+    <p>活動への参加・ご支援・取材など、お気軽にご連絡ください。</p>
+    <a href="mailto:info@sakura-fc.example.org" class="btn">メールで問い合わせる</a>
+  </section>
+
+  <!-- フッター -->
+  <footer>
+    <p>&copy; 2026 NPO法人 さくらFC. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
