@@ -8,24 +8,24 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #080e0a;
-      --bg2: #0b130d;
-      --bg3: #101a12;
-      --accent: #00e87a;
-      --accent2: #ff3d6b;
-      --accent3: #b6ff00;
-      --text: #e8f5ed;
-      --muted: #4d6657;
-      --border: rgba(0, 232, 122, 0.15);
+      --green:   #00a84f;
+      --green-d: #007a38;
+      --green-l: #e6f7ef;
+      --lime:    #b6ff00;
+      --red:     #e8253a;
+      --white:   #ffffff;
+      --gray:    #f2f4f0;
+      --text:    #0e1a12;
+      --muted:   #6b7e72;
+      --border:  #d4e8db;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Inter', 'Noto Sans JP', sans-serif;
-      background-color: var(--bg);
+      background: var(--white);
       color: var(--text);
       line-height: 1.6;
       overflow-x: hidden;
@@ -34,381 +34,319 @@
     /* ---- HEADER ---- */
     header {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       z-index: 200;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 18px 48px;
-      background: rgba(8, 12, 18, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      height: 68px;
+      background: var(--green-d);
     }
 
     .logo {
-      font-size: 1.1rem;
-      font-weight: 900;
-      letter-spacing: 0.05em;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      text-decoration: none;
     }
 
-    .logo-mark {
-      width: 32px;
-      height: 32px;
-      background: var(--accent);
-      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+    /* SVG六角形ボールロゴ */
+    .logo-icon { flex-shrink: 0; }
 
     .logo-text {
-      color: var(--text);
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: 0.04em;
+      line-height: 1.2;
     }
 
-    .logo-text span {
-      color: var(--accent);
+    .logo-text small {
+      display: block;
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
     }
 
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 36px;
-    }
+    nav { display: flex; align-items: center; gap: 32px; }
 
     nav a {
-      color: var(--muted);
+      color: rgba(255,255,255,0.75);
       text-decoration: none;
-      font-size: 0.85rem;
+      font-size: 0.83rem;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       transition: color 0.2s;
     }
 
-    nav a:hover { color: var(--accent); }
+    nav a:hover { color: var(--lime); }
 
     .nav-cta {
-      background: var(--accent);
-      color: var(--bg) !important;
-      padding: 9px 22px;
+      background: var(--lime);
+      color: var(--green-d) !important;
+      padding: 10px 24px;
       border-radius: 2px;
-      font-weight: 700 !important;
+      font-weight: 800 !important;
     }
 
-    .nav-cta:hover {
-      background: #33ed91;
-      color: var(--bg) !important;
-    }
+    .nav-cta:hover { background: #ceff33; color: var(--green-d) !important; }
 
     /* ---- HERO ---- */
     .hero {
       min-height: 100vh;
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       align-items: center;
+      background: var(--green-d);
+      padding: 100px 48px 60px;
       position: relative;
-      padding: 120px 48px 80px;
       overflow: hidden;
     }
 
-    /* グリッド背景 */
-    .hero::before {
-      content: '';
+    /* フィールドライン装飾 */
+    .hero-field-bg {
       position: absolute;
       inset: 0;
-      background-image:
-        linear-gradient(rgba(0,232,122,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,232,122,0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
+      opacity: 0.07;
       pointer-events: none;
     }
 
-    /* 光のエフェクト */
-    .hero::after {
-      content: '';
-      position: absolute;
-      top: -200px;
-      right: -100px;
-      width: 700px;
-      height: 700px;
-      background: radial-gradient(circle, rgba(0,232,122,0.12) 0%, transparent 65%);
-      pointer-events: none;
-    }
-
-    .hero-glow2 {
-      position: absolute;
-      bottom: -150px;
-      left: -100px;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(255,61,107,0.1) 0%, transparent 65%);
-      pointer-events: none;
-    }
-
-    .hero-content {
+    .hero-left {
       position: relative;
       z-index: 1;
-      max-width: 760px;
     }
 
     .hero-badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      font-size: 0.75rem;
+      border: 1px solid rgba(182,255,0,0.6);
+      color: var(--lime);
+      font-size: 0.72rem;
       font-weight: 700;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       padding: 6px 14px;
       border-radius: 2px;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
     }
 
     .hero-badge::before {
       content: '';
-      width: 6px;
-      height: 6px;
-      background: var(--accent);
+      width: 6px; height: 6px;
+      background: var(--lime);
       border-radius: 50%;
-      animation: pulse 2s infinite;
+      animation: blink 2s infinite;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
+    @keyframes blink {
+      0%,100% { opacity: 1; }
+      50%      { opacity: 0.2; }
     }
 
     .hero h1 {
-      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-size: clamp(2.8rem, 5vw, 4.8rem);
       font-weight: 900;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      margin-bottom: 28px;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      margin-bottom: 24px;
     }
 
-    .hero h1 .line1 { display: block; color: var(--text); }
-    .hero h1 .line2 {
-      display: block;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .hero h1 em {
+      font-style: normal;
+      color: var(--lime);
     }
 
     .hero-desc {
-      font-size: 1.05rem;
-      color: var(--muted);
-      max-width: 520px;
-      margin-bottom: 48px;
-      line-height: 1.8;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.65);
+      max-width: 440px;
+      line-height: 1.85;
+      margin-bottom: 44px;
     }
 
-    .hero-actions {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
 
     .btn-primary {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: var(--accent);
-      color: var(--bg);
-      padding: 16px 36px;
-      font-size: 0.9rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
+      background: var(--lime);
+      color: var(--green-d);
+      padding: 15px 36px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
       text-decoration: none;
       border-radius: 2px;
       transition: all 0.2s;
     }
 
     .btn-primary:hover {
-      background: #33ed91;
+      background: #ceff33;
       transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(0,232,122,0.3);
+      box-shadow: 0 8px 28px rgba(182,255,0,0.35);
     }
 
     .btn-outline {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      border: 1px solid var(--muted);
-      color: var(--text);
-      padding: 16px 36px;
-      font-size: 0.9rem;
+      border: 1px solid rgba(255,255,255,0.35);
+      color: var(--white);
+      padding: 15px 36px;
+      font-size: 0.88rem;
       font-weight: 600;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.04em;
       text-decoration: none;
       border-radius: 2px;
       transition: all 0.2s;
     }
 
     .btn-outline:hover {
-      border-color: var(--accent);
-      color: var(--accent);
+      border-color: var(--lime);
+      color: var(--lime);
+    }
+
+    /* ヒーライラスト（右カラム） */
+    .hero-right {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     /* ---- TICKER ---- */
     .ticker {
-      background: var(--accent);
-      color: var(--bg);
-      padding: 12px 0;
+      background: var(--lime);
+      color: var(--green-d);
+      padding: 11px 0;
       overflow: hidden;
       white-space: nowrap;
     }
 
     .ticker-inner {
       display: inline-block;
-      animation: ticker 28s linear infinite;
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
+      animation: scroll 30s linear infinite;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
     }
 
-    @keyframes ticker {
-      0% { transform: translateX(0); }
+    @keyframes scroll {
+      0%   { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
 
-    .ticker-sep {
-      margin: 0 28px;
-      opacity: 0.5;
-    }
+    .sep { margin: 0 24px; opacity: 0.45; }
 
-    /* ---- SECTION COMMON ---- */
-    section {
-      padding: 100px 48px;
-    }
+    /* ---- SECTION ---- */
+    section { padding: 96px 48px; }
 
     .label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 16px;
       display: flex;
       align-items: center;
       gap: 10px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 14px;
     }
 
     .label::before {
       content: '';
-      display: block;
-      width: 24px;
-      height: 2px;
-      background: var(--accent);
+      width: 22px; height: 2px;
+      background: var(--green);
     }
 
     .section-heading {
-      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
       font-weight: 900;
       line-height: 1.2;
       letter-spacing: -0.02em;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .section-sub {
       color: var(--muted);
       font-size: 0.95rem;
-      max-width: 520px;
+      max-width: 500px;
       line-height: 1.8;
-      margin-bottom: 60px;
+      margin-bottom: 56px;
     }
 
     /* ---- ACTIVITIES ---- */
-    .activities {
-      background: var(--bg2);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .activities::after {
-      content: 'SPORT';
-      position: absolute;
-      right: -20px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 14rem;
-      font-weight: 900;
-      color: rgba(255,255,255,0.02);
-      letter-spacing: -0.05em;
-      pointer-events: none;
-      user-select: none;
-    }
+    .activities { background: var(--gray); }
 
     .activity-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .activity-card {
-      background: var(--bg2);
-      padding: 40px 32px;
-      transition: background 0.25s;
-      position: relative;
-      overflow: hidden;
+      background: var(--white);
+      border-radius: 6px;
+      padding: 36px 28px;
+      border-top: 3px solid var(--green);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    .activity-card::before {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      transform: scaleX(0);
-      transition: transform 0.3s;
+    .activity-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(0,100,50,0.1);
     }
-
-    .activity-card:hover { background: var(--bg3); }
-    .activity-card:hover::before { transform: scaleX(1); }
 
     .activity-num {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 700;
-      color: var(--accent);
-      letter-spacing: 0.15em;
+      color: var(--green);
+      letter-spacing: 0.14em;
       margin-bottom: 20px;
-    }
-
-    .activity-icon {
-      font-size: 2rem;
-      margin-bottom: 20px;
-      display: block;
     }
 
     .activity-card h3 {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 700;
-      margin-bottom: 12px;
-      letter-spacing: 0.02em;
+      margin-bottom: 10px;
     }
 
     .activity-card p {
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       color: var(--muted);
       line-height: 1.75;
     }
 
     /* ---- STATS ---- */
     .stats {
-      background: var(--bg);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+      background: var(--green-d);
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stats::after {
+      content: '';
+      position: absolute;
+      right: -80px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 480px;
+      height: 480px;
+      border: 80px solid rgba(255,255,255,0.04);
+      border-radius: 50%;
+      pointer-events: none;
     }
 
     .stats-inner {
@@ -420,61 +358,54 @@
       margin: 0 auto;
     }
 
+    .stats .label::before { background: var(--lime); }
+    .stats .label { color: var(--lime); }
+    .stats .section-heading { color: var(--white); }
+    .stats .section-sub { color: rgba(255,255,255,0.6); }
+
     .stats-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 2px;
-      background: var(--border);
+      background: rgba(255,255,255,0.1);
     }
 
     .stat-cell {
-      background: var(--bg2);
+      background: rgba(255,255,255,0.05);
       padding: 40px 32px;
     }
 
     .stat-num {
-      font-size: 3.5rem;
+      font-size: 3.2rem;
       font-weight: 900;
-      line-height: 1;
       letter-spacing: -0.03em;
-      background: linear-gradient(135deg, var(--accent), #7dffc0);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: var(--lime);
+      line-height: 1;
     }
 
     .stat-label {
       font-size: 0.82rem;
-      color: var(--muted);
+      color: rgba(255,255,255,0.55);
       margin-top: 8px;
-      letter-spacing: 0.05em;
     }
 
     /* ---- NEWS ---- */
-    .news {
-      background: var(--bg2);
-    }
-
     .news-inner {
       display: grid;
-      grid-template-columns: 300px 1fr;
+      grid-template-columns: 280px 1fr;
       gap: 80px;
       max-width: 1100px;
       margin: 0 auto;
     }
 
-    .news-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
+    .news-list { display: flex; flex-direction: column; }
 
     .news-item {
       display: grid;
-      grid-template-columns: 88px auto 1fr;
+      grid-template-columns: 84px auto 1fr;
       align-items: start;
       gap: 16px;
-      padding: 22px 0;
+      padding: 20px 0;
       border-bottom: 1px solid var(--border);
       text-decoration: none;
       color: var(--text);
@@ -482,39 +413,35 @@
     }
 
     .news-item:first-child { border-top: 1px solid var(--border); }
-    .news-item:hover { color: var(--accent); }
+    .news-item:hover { color: var(--green); }
 
     .news-date {
       font-size: 0.78rem;
       color: var(--muted);
       font-weight: 600;
       padding-top: 3px;
-      font-variant-numeric: tabular-nums;
     }
 
     .news-tag {
-      font-size: 0.68rem;
+      font-size: 0.66rem;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       padding: 3px 8px;
       border-radius: 2px;
       white-space: nowrap;
-      background: rgba(0,232,122,0.1);
-      color: var(--accent);
-      border: 1px solid rgba(0,232,122,0.25);
+      background: var(--green-l);
+      color: var(--green-d);
     }
 
     .news-tag.event {
-      background: rgba(255,61,107,0.1);
-      color: var(--accent2);
-      border-color: rgba(255,61,107,0.25);
+      background: #fde8eb;
+      color: var(--red);
     }
 
     .news-tag.report {
-      background: rgba(182,255,0,0.1);
-      color: var(--accent3);
-      border-color: rgba(182,255,0,0.25);
+      background: #f0f8e6;
+      color: #4a7a00;
     }
 
     .news-title {
@@ -525,27 +452,8 @@
 
     /* ---- CONTACT ---- */
     .contact {
-      background: var(--bg);
+      background: var(--gray);
       text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .contact::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(0,232,122,0.07) 0%, transparent 65%);
-      pointer-events: none;
-    }
-
-    .contact-inner {
-      position: relative;
-      z-index: 1;
     }
 
     .contact .section-sub {
@@ -553,11 +461,56 @@
       margin-right: auto;
     }
 
+    .contact-actions {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-green {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green);
+      color: var(--white);
+      padding: 15px 36px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+
+    .btn-green:hover {
+      background: var(--green-d);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,120,56,0.25);
+    }
+
+    .btn-border {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1.5px solid var(--green);
+      color: var(--green);
+      padding: 15px 36px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+
+    .btn-border:hover {
+      background: var(--green-l);
+    }
+
     /* ---- FOOTER ---- */
     footer {
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-      padding: 40px 48px;
+      background: var(--text);
+      padding: 36px 48px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -566,17 +519,12 @@
     }
 
     .footer-logo {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 700;
-      color: var(--muted);
+      color: rgba(255,255,255,0.55);
     }
 
-    .footer-logo span { color: var(--accent); }
-
-    .footer-copy {
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
+    .footer-logo span { color: var(--lime); }
 
     .footer-links {
       display: flex;
@@ -585,22 +533,40 @@
 
     .footer-links a {
       font-size: 0.78rem;
-      color: var(--muted);
+      color: rgba(255,255,255,0.4);
       text-decoration: none;
       transition: color 0.2s;
     }
 
-    .footer-links a:hover { color: var(--accent); }
+    .footer-links a:hover { color: var(--lime); }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.3);
+    }
   </style>
 </head>
 <body>
 
   <!-- ヘッダー -->
   <header>
-    <div class="logo">
-      <div class="logo-mark"></div>
-      <div class="logo-text">秋田スポーツ<span>PLUS</span></div>
-    </div>
+    <a class="logo" href="#">
+      <!-- サッカーボール SVGロゴ -->
+      <svg class="logo-icon" width="38" height="38" viewBox="0 0 38 38" fill="none">
+        <circle cx="19" cy="19" r="18" fill="#00a84f" stroke="#b6ff00" stroke-width="1.5"/>
+        <!-- ボールのパネル -->
+        <polygon points="19,7 23,11 21,16 17,16 15,11" fill="#007a38"/>
+        <polygon points="27,13 31,17 29,22 24,22 23,17" fill="#007a38"/>
+        <polygon points="27,25 24,29 19,28 18,23 22,21" fill="#007a38"/>
+        <polygon points="11,25 14,28 12,31 8,28 9,22" fill="#007a38"/>
+        <polygon points="9,16 14,15 16,20 13,24 8,22" fill="#007a38"/>
+        <circle cx="19" cy="19" r="18" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+      </svg>
+      <div class="logo-text">
+        <small>NPO法人</small>
+        秋田スポーツPLUS
+      </div>
+    </a>
     <nav>
       <a href="#activities">PROGRAMS</a>
       <a href="#news">NEWS</a>
@@ -611,39 +577,119 @@
 
   <!-- ヒーロー -->
   <section class="hero">
-    <div class="hero-glow2"></div>
-    <div class="hero-content">
+
+    <!-- フィールドライン背景SVG -->
+    <svg class="hero-field-bg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" fill="none">
+      <!-- フィールド外枠 -->
+      <rect x="80" y="60" width="1040" height="580" stroke="white" stroke-width="3"/>
+      <!-- センターライン -->
+      <line x1="600" y1="60" x2="600" y2="640" stroke="white" stroke-width="3"/>
+      <!-- センターサークル -->
+      <circle cx="600" cy="350" r="100" stroke="white" stroke-width="3"/>
+      <circle cx="600" cy="350" r="4" fill="white"/>
+      <!-- 左ペナルティエリア -->
+      <rect x="80" y="205" width="165" height="290" stroke="white" stroke-width="3"/>
+      <rect x="80" y="270" width="65" height="160" stroke="white" stroke-width="3"/>
+      <!-- 右ペナルティエリア -->
+      <rect x="955" y="205" width="165" height="290" stroke="white" stroke-width="3"/>
+      <rect x="1075" y="270" width="65" height="160" stroke="white" stroke-width="3"/>
+      <!-- コーナーアーク -->
+      <path d="M80,60 Q96,60 96,76" stroke="white" stroke-width="3" fill="none"/>
+      <path d="M1120,60 Q1104,60 1104,76" stroke="white" stroke-width="3" fill="none"/>
+      <path d="M80,640 Q96,640 96,624" stroke="white" stroke-width="3" fill="none"/>
+      <path d="M1120,640 Q1104,640 1104,624" stroke="white" stroke-width="3" fill="none"/>
+    </svg>
+
+    <!-- 左コンテンツ -->
+    <div class="hero-left">
       <div class="hero-badge">NPO法人 秋田スポーツPLUS</div>
-      <h1>
-        <span class="line1">MOVE FORWARD.</span>
-        <span class="line2">秋田から、世界へ。</span>
-      </h1>
+      <h1>MOVE<br>FORWARD.<br><em>秋田から。</em></h1>
       <p class="hero-desc">
-        テクノロジーとスポーツの力で、秋田の地域課題を解決する。<br>
-        子どもから大人まで、すべての人が「動く喜び」を持てる社会を創る。
+        スポーツの力で、秋田の地域を動かす。<br>
+        子どもから大人まで、誰もが「動く喜び」を持てる<br>
+        コミュニティをつくるNPO法人です。
       </p>
       <div class="hero-actions">
         <a href="#activities" class="btn-primary">プログラムを見る →</a>
         <a href="#contact" class="btn-outline">支援する</a>
       </div>
     </div>
+
+    <!-- 右：フィールド＋ボールイラスト -->
+    <div class="hero-right">
+      <svg width="460" height="420" viewBox="0 0 460 420" fill="none">
+        <!-- フィールド芝 -->
+        <ellipse cx="230" cy="340" rx="200" ry="50" fill="rgba(0,168,79,0.35)"/>
+        <!-- ストライプ -->
+        <ellipse cx="230" cy="340" rx="160" ry="38" fill="rgba(0,168,79,0.25)"/>
+        <ellipse cx="230" cy="340" rx="120" ry="28" fill="rgba(0,168,79,0.2)"/>
+
+        <!-- ゴールポスト -->
+        <rect x="155" y="240" width="150" height="8" rx="3" fill="white" opacity="0.9"/>
+        <rect x="155" y="240" width="8" height="70" rx="3" fill="white" opacity="0.9"/>
+        <rect x="297" y="240" width="8" height="70" rx="3" fill="white" opacity="0.9"/>
+        <!-- ゴールネット -->
+        <line x1="163" y1="248" x2="163" y2="310" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+        <line x1="185" y1="248" x2="185" y2="310" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+        <line x1="207" y1="248" x2="207" y2="310" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+        <line x1="229" y1="248" x2="229" y2="310" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+        <line x1="251" y1="248" x2="251" y2="310" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+        <line x1="273" y1="248" x2="273" y2="310" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+        <line x1="295" y1="248" x2="295" y2="310" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+        <line x1="163" y1="268" x2="297" y2="268" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+        <line x1="163" y1="288" x2="297" y2="288" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+        <line x1="163" y1="308" x2="297" y2="308" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+
+        <!-- 選手シルエット（ドリブル） -->
+        <!-- 頭 -->
+        <circle cx="230" cy="80" r="22" fill="white" opacity="0.92"/>
+        <!-- 胴体 -->
+        <rect x="216" y="102" width="28" height="52" rx="8" fill="white" opacity="0.92"/>
+        <!-- 左腕 -->
+        <rect x="192" y="108" width="28" height="12" rx="6" fill="white" opacity="0.85" transform="rotate(-15 192 108)"/>
+        <!-- 右腕（ボールへ向かう） -->
+        <rect x="240" y="108" width="30" height="12" rx="6" fill="white" opacity="0.85" transform="rotate(20 240 108)"/>
+        <!-- 左脚 -->
+        <rect x="218" y="152" width="13" height="48" rx="6" fill="white" opacity="0.88" transform="rotate(-8 218 152)"/>
+        <!-- 右脚（キック） -->
+        <rect x="232" y="152" width="13" height="48" rx="6" fill="white" opacity="0.88" transform="rotate(25 232 152)"/>
+
+        <!-- ボール（空中） -->
+        <circle cx="300" cy="195" r="28" fill="white" opacity="0.95"/>
+        <polygon points="300,172 307,179 305,188 295,188 293,179" fill="#007a38" opacity="0.8"/>
+        <polygon points="313,181 320,187 318,196 310,196 309,187" fill="#007a38" opacity="0.8"/>
+        <polygon points="295,202 301,208 298,215 291,213 290,206" fill="#007a38" opacity="0.8"/>
+        <polygon points="305,202 312,206 311,213 304,215 301,208" fill="#007a38" opacity="0.8"/>
+        <polygon points="287,187 293,183 296,190 293,197 286,196" fill="#007a38" opacity="0.8"/>
+
+        <!-- ボール軌跡 -->
+        <path d="M265 225 Q280 210 300 195" stroke="rgba(182,255,0,0.6)" stroke-width="2" stroke-dasharray="4 4" fill="none"/>
+
+        <!-- ユニフォーム番号 -->
+        <text x="226" y="134" font-family="Inter, sans-serif" font-size="14" font-weight="900" fill="#00a84f" opacity="0.9">10</text>
+
+        <!-- 影 -->
+        <ellipse cx="228" cy="330" rx="42" ry="10" fill="rgba(0,0,0,0.2)"/>
+        <ellipse cx="296" cy="334" rx="18" ry="5" fill="rgba(0,0,0,0.15)"/>
+      </svg>
+    </div>
   </section>
 
   <!-- ティッカー -->
   <div class="ticker">
     <span class="ticker-inner">
-      AKITA SPORTS PLUS&nbsp;<span class="ticker-sep">✦</span>&nbsp;
-      JUNIOR SCHOOL&nbsp;<span class="ticker-sep">✦</span>&nbsp;
-      INCLUSIVE SPORTS&nbsp;<span class="ticker-sep">✦</span>&nbsp;
-      COMMUNITY MARATHON&nbsp;<span class="ticker-sep">✦</span>&nbsp;
-      COACH TRAINING&nbsp;<span class="ticker-sep">✦</span>&nbsp;
-      NPO LAW CORPORATION&nbsp;<span class="ticker-sep">✦</span>&nbsp;
-      AKITA SPORTS PLUS&nbsp;<span class="ticker-sep">✦</span>&nbsp;
-      JUNIOR SCHOOL&nbsp;<span class="ticker-sep">✦</span>&nbsp;
-      INCLUSIVE SPORTS&nbsp;<span class="ticker-sep">✦</span>&nbsp;
-      COMMUNITY MARATHON&nbsp;<span class="ticker-sep">✦</span>&nbsp;
-      COACH TRAINING&nbsp;<span class="ticker-sep">✦</span>&nbsp;
-      NPO LAW CORPORATION&nbsp;<span class="ticker-sep">✦</span>&nbsp;
+      秋田スポーツPLUS <span class="sep">✦</span>
+      JUNIOR SCHOOL <span class="sep">✦</span>
+      INCLUSIVE SPORTS <span class="sep">✦</span>
+      COMMUNITY MARATHON <span class="sep">✦</span>
+      COACH TRAINING <span class="sep">✦</span>
+      NPO法人 <span class="sep">✦</span>
+      秋田スポーツPLUS <span class="sep">✦</span>
+      JUNIOR SCHOOL <span class="sep">✦</span>
+      INCLUSIVE SPORTS <span class="sep">✦</span>
+      COMMUNITY MARATHON <span class="sep">✦</span>
+      COACH TRAINING <span class="sep">✦</span>
+      NPO法人 <span class="sep">✦</span>
     </span>
   </div>
 
@@ -651,32 +697,64 @@
   <section class="activities" id="activities">
     <div class="label">Programs</div>
     <h2 class="section-heading">何をやっているか。</h2>
-    <p class="section-sub">地域に根ざした4つのプログラムで、スポーツの力を最大化する。</p>
+    <p class="section-sub">地域に根ざした4つのプログラムで、秋田のスポーツ文化を変える。</p>
     <div class="activity-grid">
+
       <div class="activity-card">
         <div class="activity-num">01 / YOUTH</div>
-        <span class="activity-icon">⚽</span>
+        <!-- ミニサッカーボールSVG -->
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" style="margin-bottom:16px">
+          <circle cx="24" cy="24" r="22" fill="#e6f7ef" stroke="#00a84f" stroke-width="2"/>
+          <polygon points="24,10 29,15 27,21 21,21 19,15" fill="#007a38"/>
+          <polygon points="33,17 38,22 36,28 30,28 29,22" fill="#007a38"/>
+          <polygon points="30,31 27,37 22,36 20,30 25,27" fill="#007a38"/>
+          <polygon points="15,31 19,36 15,38 11,33 13,27" fill="#007a38"/>
+          <polygon points="13,19 18,18 20,24 17,29 12,27" fill="#007a38"/>
+        </svg>
         <h3>ジュニアスクール</h3>
-        <p>小学生対象のサッカー教室。データドリブンなトレーニングで技術と精神を育てます。</p>
+        <p>小学生対象のサッカー教室。技術と仲間を大切にする心を育てます。</p>
       </div>
+
       <div class="activity-card">
         <div class="activity-num">02 / EVENT</div>
-        <span class="activity-icon">🏃</span>
+        <!-- ランナーSVG -->
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" style="margin-bottom:16px">
+          <circle cx="24" cy="24" r="22" fill="#e6f7ef" stroke="#00a84f" stroke-width="2"/>
+          <circle cx="28" cy="13" r="4" fill="#007a38"/>
+          <path d="M28 17 L24 26 L18 32" stroke="#007a38" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M24 26 L30 34" stroke="#007a38" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M20 22 L15 25" stroke="#007a38" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M25 22 L32 21" stroke="#007a38" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
         <h3>地域スポーツ大会</h3>
-        <p>年2回開催のマラソン・スポーツフェスタ。年齢・体力不問でエントリーできます。</p>
+        <p>年2回開催のマラソン・スポーツフェスタ。年齢不問で参加できます。</p>
       </div>
+
       <div class="activity-card">
         <div class="activity-num">03 / INCLUSIVE</div>
-        <span class="activity-icon">♿</span>
+        <!-- ハートSVG -->
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" style="margin-bottom:16px">
+          <circle cx="24" cy="24" r="22" fill="#e6f7ef" stroke="#00a84f" stroke-width="2"/>
+          <path d="M24 34 C24 34 11 26 11 18 C11 14 14 11 18 11 C20.5 11 22.5 12.5 24 14.5 C25.5 12.5 27.5 11 30 11 C34 11 37 14 37 18 C37 26 24 34 24 34Z" fill="#00a84f"/>
+        </svg>
         <h3>インクルーシブ活動</h3>
-        <p>障害の有無にかかわらず共に楽しめるスポーツプログラム。月2回開催。</p>
+        <p>障害の有無にかかわらず共に楽しめるプログラム。月2回開催。</p>
       </div>
+
       <div class="activity-card">
         <div class="activity-num">04 / TRAINING</div>
-        <span class="activity-icon">🎓</span>
+        <!-- 笛SVG -->
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" style="margin-bottom:16px">
+          <circle cx="24" cy="24" r="22" fill="#e6f7ef" stroke="#00a84f" stroke-width="2"/>
+          <rect x="12" y="21" width="20" height="8" rx="4" fill="#007a38"/>
+          <rect x="30" y="19" width="8" height="12" rx="3" fill="#007a38"/>
+          <circle cx="20" cy="25" r="2" fill="white"/>
+          <path d="M33 15 C36 12 40 13 38 17" stroke="#007a38" stroke-width="2" stroke-linecap="round"/>
+        </svg>
         <h3>指導者育成</h3>
         <p>次世代コーチを育てる研修プログラム。理論と実践を組み合わせたカリキュラム。</p>
       </div>
+
     </div>
   </section>
 
@@ -686,8 +764,8 @@
       <div>
         <div class="label">Impact</div>
         <h2 class="section-heading">数字が語る、<br>15年の実績。</h2>
-        <p class="section-sub">設立以来、秋田のスポーツ環境づくりに向き合い続けてきた。データが証明する私たちの歩み。</p>
-        <a href="#contact" class="btn-outline">団体概要を読む →</a>
+        <p class="section-sub">設立以来、秋田のスポーツ環境づくりに向き合い続けてきた。</p>
+        <a href="#contact" class="btn-outline" style="margin-top:8px">団体概要を読む →</a>
       </div>
       <div class="stats-grid">
         <div class="stat-cell">
@@ -711,13 +789,13 @@
   </section>
 
   <!-- お知らせ -->
-  <section class="news" id="news">
+  <section id="news">
     <div class="news-inner">
       <div>
         <div class="label">Latest News</div>
         <h2 class="section-heading">最新情報</h2>
-        <p class="section-sub">活動レポート、イベント情報をリアルタイムで発信中。</p>
-        <a href="#" class="btn-outline" style="margin-top: 32px;">全て見る →</a>
+        <p class="section-sub">活動レポート、イベント情報をリアルタイムで発信。</p>
+        <a href="#" class="btn-border" style="margin-top:32px">全て見る →</a>
       </div>
       <div class="news-list">
         <a href="#" class="news-item">
@@ -746,14 +824,12 @@
 
   <!-- お問い合わせ -->
   <section class="contact" id="contact">
-    <div class="contact-inner">
-      <div class="label" style="justify-content: center;">Contact</div>
-      <h2 class="section-heading">一緒に動こう。</h2>
-      <p class="section-sub">参加・支援・取材・協力、どんなご相談でもお気軽に。秋田スポーツPLUSはオープンです。</p>
-      <div class="hero-actions" style="justify-content: center;">
-        <a href="mailto:info@akita-sports-plus.example.org" class="btn-primary">メールで問い合わせる →</a>
-        <a href="#" class="btn-outline">寄付・支援について</a>
-      </div>
+    <div class="label" style="justify-content:center">Contact</div>
+    <h2 class="section-heading" style="text-align:center">一緒に動こう。</h2>
+    <p class="section-sub" style="text-align:center">参加・支援・取材・協力、どんなご相談でもお気軽に。</p>
+    <div class="contact-actions">
+      <a href="mailto:info@akita-sports-plus.example.org" class="btn-green">メールで問い合わせる →</a>
+      <a href="#" class="btn-border">寄付・支援について</a>
     </div>
   </section>
 
